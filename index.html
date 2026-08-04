@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Optimus Prep — RL Engineer Interview Lab</title>
+<meta name="description" content="A self-hosted interview lab for the Tesla Optimus Reinforcement Learning Engineer role: pattern library, an in-browser Python IDE, and timed mock interviews.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Crect x='1' y='1' width='24' height='24' rx='5' fill='%230F1319'/%3E%3Cpath d='M5 14 L9 14 L11 8 L14 18 L16 12 L21 12' stroke='%2352B8AF' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="1" y="1" width="24" height="24" rx="5" stroke="var(--signal)" stroke-width="1.6"/>
+        <path d="M5 14 L9 14 L11 8 L14 18 L16 12 L21 12" stroke="var(--signal)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>OPTIMUS PREP<small>SOHAG K. SAHA</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html" class="active">Home</a>
+      <a href="learn.html">Learn</a>
+      <a href="practice.html">Practice</a>
+      <a href="mock.html">Mock Interview</a>
+    </nav>
+    <div class="nav-right">
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to night mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
+        <span class="knob"></span>
+      </button>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-label="Toggle menu"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero grid-surface">
+    <div class="wrap">
+      <div class="hero-inner">
+        <span class="eyebrow">Tesla · Optimus · RL Engineer, Policy</span>
+        <h1>Run interview prep like a <span class="accent">lab session</span>, not a study guide.</h1>
+        <p class="lede">A pattern library, a real Python runtime in your browser, and a timed mock interview mode — built around the exact Optimus Policy job description, and around what your own HIL and real-time control background transfers to robot learning.</p>
+        <div class="hero-cta">
+          <a href="mock.html" class="btn btn-primary">Start a mock interview</a>
+          <a href="practice.html" class="btn btn-ghost">Open the Python IDE</a>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat"><div class="num">22</div><div class="label">DSA problems</div></div>
+        <div class="stat"><div class="num">10</div><div class="label">RL implementations</div></div>
+        <div class="stat"><div class="num">06</div><div class="label">System design drills</div></div>
+        <div class="stat"><div class="num">24</div><div class="label">Q&amp;A rapid-fire</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><svg class="trace-divider" viewBox="0 0 1200 34" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M 0 17 L 5.0 18.0 L 10.0 18.9 L 15.0 19.9 L 20.0 20.9 L 25.0 21.7 L 30.0 22.5 L 35.0 23.2 L 40.0 23.7 L 45.0 24.1 L 50.0 24.3 L 55.0 24.4 L 60.0 24.2 L 65.0 23.9 L 70.0 23.3 L 75.0 22.6 L 80.0 21.7 L 85.0 20.7 L 90.0 19.6 L 95.0 18.3 L 100.0 17.0 L 105.0 15.6 L 110.0 14.3 L 115.0 13.0 L 120.0 11.7 L 125.0 10.6 L 130.0 9.6 L 135.0 8.7 L 140.0 8.1 L 145.0 7.7 L 150.0 7.4 L 155.0 7.5 L 160.0 7.7 L 165.0 8.3 L 170.0 9.0 L 175.0 9.9 L 180.0 11.1 L 185.0 12.4 L 190.0 13.8 L 195.0 15.4 L 200.0 17.0 L 205.0 18.6 L 210.0 20.2 L 215.0 21.8 L 220.0 23.2 L 225.0 24.5 L 230.0 25.6 L 235.0 26.5 L 240.0 27.2 L 245.0 27.7 L 250.0 27.8 L 255.0 27.7 L 260.0 27.4 L 265.0 26.7 L 270.0 25.8 L 275.0 24.7 L 280.0 23.4 L 285.0 22.0 L 290.0 20.4 L 295.0 18.7 L 300.0 17.0 L 305.0 15.3 L 310.0 13.6 L 315.0 12.0 L 320.0 10.6 L 325.0 9.3 L 330.0 8.2 L 335.0 7.3 L 340.0 6.6 L 345.0 6.3 L 350.0 6.2 L 355.0 6.3 L 360.0 6.8 L 365.0 7.5 L 370.0 8.4 L 375.0 9.5 L 380.0 10.8 L 385.0 12.2 L 390.0 13.8 L 395.0 15.4 L 400.0 17.0 L 405.0 18.6 L 410.0 20.2 L 415.0 21.6 L 420.0 22.9 L 425.0 24.1 L 430.0 25.0 L 435.0 25.7 L 440.0 26.3 L 445.0 26.5 L 450.0 26.6 L 455.0 26.3 L 460.0 25.9 L 465.0 25.3 L 470.0 24.4 L 475.0 23.4 L 480.0 22.3 L 485.0 21.0 L 490.0 19.7 L 495.0 18.4 L 500.0 17.0 L 505.0 15.7 L 510.0 14.4 L 515.0 13.3 L 520.0 12.3 L 525.0 11.4 L 530.0 10.7 L 535.0 10.1 L 540.0 9.8 L 545.0 9.6 L 550.0 9.7 L 555.0 9.9 L 560.0 10.3 L 565.0 10.8 L 570.0 11.5 L 575.0 12.3 L 580.0 13.1 L 585.0 14.1 L 590.0 15.1 L 595.0 16.0 L 600.0 17.0 L 605.0 17.9 L 610.0 18.8 L 615.0 19.6 L 620.0 20.3 L 625.0 20.8 L 630.0 21.3 L 635.0 21.6 L 640.0 21.8 L 645.0 21.8 L 650.0 21.8 L 655.0 21.6 L 660.0 21.3 L 665.0 20.9 L 670.0 20.5 L 675.0 19.9 L 680.0 19.4 L 685.0 18.8 L 690.0 18.2 L 695.0 17.6 L 700.0 17.0 L 705.0 16.5 L 710.0 16.0 L 715.0 15.5 L 720.0 15.2 L 725.0 14.9 L 730.0 14.6 L 735.0 14.5 L 740.0 14.4 L 745.0 14.4 L 750.0 14.5 L 755.0 14.6 L 760.0 14.7 L 765.0 15.0 L 770.0 15.2 L 775.0 15.5 L 780.0 15.8 L 785.0 16.1 L 790.0 16.4 L 795.0 16.7 L 800.0 17.0 L 805.0 17.3 L 810.0 17.5 L 815.0 17.7 L 820.0 17.9 L 825.0 18.0 L 830.0 18.2 L 835.0 18.2 L 840.0 18.3 L 845.0 18.3 L 850.0 18.3 L 855.0 18.2 L 860.0 18.1 L 865.0 18.1 L 870.0 17.9 L 875.0 17.8 L 880.0 17.7 L 885.0 17.5 L 890.0 17.3 L 895.0 17.2 L 900.0 17.0 L 905.0 16.8 L 910.0 16.7 L 915.0 16.5 L 920.0 16.3 L 925.0 16.2 L 930.0 16.1 L 935.0 15.9 L 940.0 15.9 L 945.0 15.8 L 950.0 15.7 L 955.0 15.7 L 960.0 15.7 L 965.0 15.8 L 970.0 15.8 L 975.0 16.0 L 980.0 16.1 L 985.0 16.3 L 990.0 16.5 L 995.0 16.7 L 1000.0 17.0 L 1005.0 17.3 L 1010.0 17.6 L 1015.0 17.9 L 1020.0 18.2 L 1025.0 18.5 L 1030.0 18.8 L 1035.0 19.0 L 1040.0 19.3 L 1045.0 19.4 L 1050.0 19.5 L 1055.0 19.6 L 1060.0 19.6 L 1065.0 19.5 L 1070.0 19.4 L 1075.0 19.1 L 1080.0 18.8 L 1085.0 18.5 L 1090.0 18.0 L 1095.0 17.5 L 1100.0 17.0 L 1105.0 16.4 L 1110.0 15.8 L 1115.0 15.2 L 1120.0 14.6 L 1125.0 14.1 L 1130.0 13.5 L 1135.0 13.1 L 1140.0 12.7 L 1145.0 12.4 L 1150.0 12.2 L 1155.0 12.2 L 1160.0 12.2 L 1165.0 12.4 L 1170.0 12.7 L 1175.0 13.2 L 1180.0 13.7 L 1185.0 14.4 L 1190.0 15.2 L 1195.0 16.1 L 1200.0 17.0"></path>
+  <path class="dash" d="M 0 17 L 5.0 18.0 L 10.0 18.9 L 15.0 19.9 L 20.0 20.9 L 25.0 21.7 L 30.0 22.5 L 35.0 23.2 L 40.0 23.7 L 45.0 24.1 L 50.0 24.3 L 55.0 24.4 L 60.0 24.2 L 65.0 23.9 L 70.0 23.3 L 75.0 22.6 L 80.0 21.7 L 85.0 20.7 L 90.0 19.6 L 95.0 18.3 L 100.0 17.0 L 105.0 15.6 L 110.0 14.3 L 115.0 13.0 L 120.0 11.7 L 125.0 10.6 L 130.0 9.6 L 135.0 8.7 L 140.0 8.1 L 145.0 7.7 L 150.0 7.4 L 155.0 7.5 L 160.0 7.7 L 165.0 8.3 L 170.0 9.0 L 175.0 9.9 L 180.0 11.1 L 185.0 12.4 L 190.0 13.8 L 195.0 15.4 L 200.0 17.0 L 205.0 18.6 L 210.0 20.2 L 215.0 21.8 L 220.0 23.2 L 225.0 24.5 L 230.0 25.6 L 235.0 26.5 L 240.0 27.2 L 245.0 27.7 L 250.0 27.8 L 255.0 27.7 L 260.0 27.4 L 265.0 26.7 L 270.0 25.8 L 275.0 24.7 L 280.0 23.4 L 285.0 22.0 L 290.0 20.4 L 295.0 18.7 L 300.0 17.0 L 305.0 15.3 L 310.0 13.6 L 315.0 12.0 L 320.0 10.6 L 325.0 9.3 L 330.0 8.2 L 335.0 7.3 L 340.0 6.6 L 345.0 6.3 L 350.0 6.2 L 355.0 6.3 L 360.0 6.8 L 365.0 7.5 L 370.0 8.4 L 375.0 9.5 L 380.0 10.8 L 385.0 12.2 L 390.0 13.8 L 395.0 15.4 L 400.0 17.0 L 405.0 18.6 L 410.0 20.2 L 415.0 21.6 L 420.0 22.9 L 425.0 24.1 L 430.0 25.0 L 435.0 25.7 L 440.0 26.3 L 445.0 26.5 L 450.0 26.6 L 455.0 26.3 L 460.0 25.9 L 465.0 25.3 L 470.0 24.4 L 475.0 23.4 L 480.0 22.3 L 485.0 21.0 L 490.0 19.7 L 495.0 18.4 L 500.0 17.0 L 505.0 15.7 L 510.0 14.4 L 515.0 13.3 L 520.0 12.3 L 525.0 11.4 L 530.0 10.7 L 535.0 10.1 L 540.0 9.8 L 545.0 9.6 L 550.0 9.7 L 555.0 9.9 L 560.0 10.3 L 565.0 10.8 L 570.0 11.5 L 575.0 12.3 L 580.0 13.1 L 585.0 14.1 L 590.0 15.1 L 595.0 16.0 L 600.0 17.0 L 605.0 17.9 L 610.0 18.8 L 615.0 19.6 L 620.0 20.3 L 625.0 20.8 L 630.0 21.3 L 635.0 21.6 L 640.0 21.8 L 645.0 21.8 L 650.0 21.8 L 655.0 21.6 L 660.0 21.3 L 665.0 20.9 L 670.0 20.5 L 675.0 19.9 L 680.0 19.4 L 685.0 18.8 L 690.0 18.2 L 695.0 17.6 L 700.0 17.0 L 705.0 16.5 L 710.0 16.0 L 715.0 15.5 L 720.0 15.2 L 725.0 14.9 L 730.0 14.6 L 735.0 14.5 L 740.0 14.4 L 745.0 14.4 L 750.0 14.5 L 755.0 14.6 L 760.0 14.7 L 765.0 15.0 L 770.0 15.2 L 775.0 15.5 L 780.0 15.8 L 785.0 16.1 L 790.0 16.4 L 795.0 16.7 L 800.0 17.0 L 805.0 17.3 L 810.0 17.5 L 815.0 17.7 L 820.0 17.9 L 825.0 18.0 L 830.0 18.2 L 835.0 18.2 L 840.0 18.3 L 845.0 18.3 L 850.0 18.3 L 855.0 18.2 L 860.0 18.1 L 865.0 18.1 L 870.0 17.9 L 875.0 17.8 L 880.0 17.7 L 885.0 17.5 L 890.0 17.3 L 895.0 17.2 L 900.0 17.0 L 905.0 16.8 L 910.0 16.7 L 915.0 16.5 L 920.0 16.3 L 925.0 16.2 L 930.0 16.1 L 935.0 15.9 L 940.0 15.9 L 945.0 15.8 L 950.0 15.7 L 955.0 15.7 L 960.0 15.7 L 965.0 15.8 L 970.0 15.8 L 975.0 16.0 L 980.0 16.1 L 985.0 16.3 L 990.0 16.5 L 995.0 16.7 L 1000.0 17.0 L 1005.0 17.3 L 1010.0 17.6 L 1015.0 17.9 L 1020.0 18.2 L 1025.0 18.5 L 1030.0 18.8 L 1035.0 19.0 L 1040.0 19.3 L 1045.0 19.4 L 1050.0 19.5 L 1055.0 19.6 L 1060.0 19.6 L 1065.0 19.5 L 1070.0 19.4 L 1075.0 19.1 L 1080.0 18.8 L 1085.0 18.5 L 1090.0 18.0 L 1095.0 17.5 L 1100.0 17.0 L 1105.0 16.4 L 1110.0 15.8 L 1115.0 15.2 L 1120.0 14.6 L 1125.0 14.1 L 1130.0 13.5 L 1135.0 13.1 L 1140.0 12.7 L 1145.0 12.4 L 1150.0 12.2 L 1155.0 12.2 L 1160.0 12.2 L 1165.0 12.4 L 1170.0 12.7 L 1175.0 13.2 L 1180.0 13.7 L 1185.0 14.4 L 1190.0 15.2 L 1195.0 16.1 L 1200.0 17.0"></path>
+</svg></div>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Three modes</span>
+        <h2>Everything runs client-side.</h2>
+        <p>No login, no server, no data leaving your browser. Python execution is powered by Pyodide, a real CPython build compiled to WebAssembly — the code you write actually runs.</p>
+      </div>
+
+      <div class="panel-grid">
+        <a href="learn.html" class="panel-card">
+          <span class="readout">01 · REFERENCE</span>
+          <span class="icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </span>
+          <h3>Learn</h3>
+          <p>The full pattern library: DSA, RL implementation building blocks, system design, and a rapid-fire Q&amp;A bank — statement, approach, working code, and complexity for every entry.</p>
+          <span class="go">Browse the library <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+
+        <a href="practice.html" class="panel-card">
+          <span class="readout">02 · SANDBOX</span>
+          <span class="icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M13 5l-2 14"/></svg>
+          </span>
+          <h3>Practice</h3>
+          <p>Pick any problem, write real Python against it, run it instantly, and check your own solution against built-in test assertions before peeking at the reference.</p>
+          <span class="go">Open the IDE <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+
+        <a href="mock.html" class="panel-card">
+          <span class="readout">03 · UNDER PRESSURE</span>
+          <span class="icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+          </span>
+          <h3>Mock Interview</h3>
+          <p>Choose DSA, RL, or mixed. Get a problem cold, code against a countdown timer, then self-grade against the reference solution — session history saved locally.</p>
+          <span class="go">Start the clock <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><svg class="trace-divider" viewBox="0 0 1200 34" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M 0 17 L 5.0 18.0 L 10.0 18.9 L 15.0 19.9 L 20.0 20.9 L 25.0 21.7 L 30.0 22.5 L 35.0 23.2 L 40.0 23.7 L 45.0 24.1 L 50.0 24.3 L 55.0 24.4 L 60.0 24.2 L 65.0 23.9 L 70.0 23.3 L 75.0 22.6 L 80.0 21.7 L 85.0 20.7 L 90.0 19.6 L 95.0 18.3 L 100.0 17.0 L 105.0 15.6 L 110.0 14.3 L 115.0 13.0 L 120.0 11.7 L 125.0 10.6 L 130.0 9.6 L 135.0 8.7 L 140.0 8.1 L 145.0 7.7 L 150.0 7.4 L 155.0 7.5 L 160.0 7.7 L 165.0 8.3 L 170.0 9.0 L 175.0 9.9 L 180.0 11.1 L 185.0 12.4 L 190.0 13.8 L 195.0 15.4 L 200.0 17.0 L 205.0 18.6 L 210.0 20.2 L 215.0 21.8 L 220.0 23.2 L 225.0 24.5 L 230.0 25.6 L 235.0 26.5 L 240.0 27.2 L 245.0 27.7 L 250.0 27.8 L 255.0 27.7 L 260.0 27.4 L 265.0 26.7 L 270.0 25.8 L 275.0 24.7 L 280.0 23.4 L 285.0 22.0 L 290.0 20.4 L 295.0 18.7 L 300.0 17.0 L 305.0 15.3 L 310.0 13.6 L 315.0 12.0 L 320.0 10.6 L 325.0 9.3 L 330.0 8.2 L 335.0 7.3 L 340.0 6.6 L 345.0 6.3 L 350.0 6.2 L 355.0 6.3 L 360.0 6.8 L 365.0 7.5 L 370.0 8.4 L 375.0 9.5 L 380.0 10.8 L 385.0 12.2 L 390.0 13.8 L 395.0 15.4 L 400.0 17.0 L 405.0 18.6 L 410.0 20.2 L 415.0 21.6 L 420.0 22.9 L 425.0 24.1 L 430.0 25.0 L 435.0 25.7 L 440.0 26.3 L 445.0 26.5 L 450.0 26.6 L 455.0 26.3 L 460.0 25.9 L 465.0 25.3 L 470.0 24.4 L 475.0 23.4 L 480.0 22.3 L 485.0 21.0 L 490.0 19.7 L 495.0 18.4 L 500.0 17.0 L 505.0 15.7 L 510.0 14.4 L 515.0 13.3 L 520.0 12.3 L 525.0 11.4 L 530.0 10.7 L 535.0 10.1 L 540.0 9.8 L 545.0 9.6 L 550.0 9.7 L 555.0 9.9 L 560.0 10.3 L 565.0 10.8 L 570.0 11.5 L 575.0 12.3 L 580.0 13.1 L 585.0 14.1 L 590.0 15.1 L 595.0 16.0 L 600.0 17.0 L 605.0 17.9 L 610.0 18.8 L 615.0 19.6 L 620.0 20.3 L 625.0 20.8 L 630.0 21.3 L 635.0 21.6 L 640.0 21.8 L 645.0 21.8 L 650.0 21.8 L 655.0 21.6 L 660.0 21.3 L 665.0 20.9 L 670.0 20.5 L 675.0 19.9 L 680.0 19.4 L 685.0 18.8 L 690.0 18.2 L 695.0 17.6 L 700.0 17.0 L 705.0 16.5 L 710.0 16.0 L 715.0 15.5 L 720.0 15.2 L 725.0 14.9 L 730.0 14.6 L 735.0 14.5 L 740.0 14.4 L 745.0 14.4 L 750.0 14.5 L 755.0 14.6 L 760.0 14.7 L 765.0 15.0 L 770.0 15.2 L 775.0 15.5 L 780.0 15.8 L 785.0 16.1 L 790.0 16.4 L 795.0 16.7 L 800.0 17.0 L 805.0 17.3 L 810.0 17.5 L 815.0 17.7 L 820.0 17.9 L 825.0 18.0 L 830.0 18.2 L 835.0 18.2 L 840.0 18.3 L 845.0 18.3 L 850.0 18.3 L 855.0 18.2 L 860.0 18.1 L 865.0 18.1 L 870.0 17.9 L 875.0 17.8 L 880.0 17.7 L 885.0 17.5 L 890.0 17.3 L 895.0 17.2 L 900.0 17.0 L 905.0 16.8 L 910.0 16.7 L 915.0 16.5 L 920.0 16.3 L 925.0 16.2 L 930.0 16.1 L 935.0 15.9 L 940.0 15.9 L 945.0 15.8 L 950.0 15.7 L 955.0 15.7 L 960.0 15.7 L 965.0 15.8 L 970.0 15.8 L 975.0 16.0 L 980.0 16.1 L 985.0 16.3 L 990.0 16.5 L 995.0 16.7 L 1000.0 17.0 L 1005.0 17.3 L 1010.0 17.6 L 1015.0 17.9 L 1020.0 18.2 L 1025.0 18.5 L 1030.0 18.8 L 1035.0 19.0 L 1040.0 19.3 L 1045.0 19.4 L 1050.0 19.5 L 1055.0 19.6 L 1060.0 19.6 L 1065.0 19.5 L 1070.0 19.4 L 1075.0 19.1 L 1080.0 18.8 L 1085.0 18.5 L 1090.0 18.0 L 1095.0 17.5 L 1100.0 17.0 L 1105.0 16.4 L 1110.0 15.8 L 1115.0 15.2 L 1120.0 14.6 L 1125.0 14.1 L 1130.0 13.5 L 1135.0 13.1 L 1140.0 12.7 L 1145.0 12.4 L 1150.0 12.2 L 1155.0 12.2 L 1160.0 12.2 L 1165.0 12.4 L 1170.0 12.7 L 1175.0 13.2 L 1180.0 13.7 L 1185.0 14.4 L 1190.0 15.2 L 1195.0 16.1 L 1200.0 17.0"></path>
+  <path class="dash" d="M 0 17 L 5.0 18.0 L 10.0 18.9 L 15.0 19.9 L 20.0 20.9 L 25.0 21.7 L 30.0 22.5 L 35.0 23.2 L 40.0 23.7 L 45.0 24.1 L 50.0 24.3 L 55.0 24.4 L 60.0 24.2 L 65.0 23.9 L 70.0 23.3 L 75.0 22.6 L 80.0 21.7 L 85.0 20.7 L 90.0 19.6 L 95.0 18.3 L 100.0 17.0 L 105.0 15.6 L 110.0 14.3 L 115.0 13.0 L 120.0 11.7 L 125.0 10.6 L 130.0 9.6 L 135.0 8.7 L 140.0 8.1 L 145.0 7.7 L 150.0 7.4 L 155.0 7.5 L 160.0 7.7 L 165.0 8.3 L 170.0 9.0 L 175.0 9.9 L 180.0 11.1 L 185.0 12.4 L 190.0 13.8 L 195.0 15.4 L 200.0 17.0 L 205.0 18.6 L 210.0 20.2 L 215.0 21.8 L 220.0 23.2 L 225.0 24.5 L 230.0 25.6 L 235.0 26.5 L 240.0 27.2 L 245.0 27.7 L 250.0 27.8 L 255.0 27.7 L 260.0 27.4 L 265.0 26.7 L 270.0 25.8 L 275.0 24.7 L 280.0 23.4 L 285.0 22.0 L 290.0 20.4 L 295.0 18.7 L 300.0 17.0 L 305.0 15.3 L 310.0 13.6 L 315.0 12.0 L 320.0 10.6 L 325.0 9.3 L 330.0 8.2 L 335.0 7.3 L 340.0 6.6 L 345.0 6.3 L 350.0 6.2 L 355.0 6.3 L 360.0 6.8 L 365.0 7.5 L 370.0 8.4 L 375.0 9.5 L 380.0 10.8 L 385.0 12.2 L 390.0 13.8 L 395.0 15.4 L 400.0 17.0 L 405.0 18.6 L 410.0 20.2 L 415.0 21.6 L 420.0 22.9 L 425.0 24.1 L 430.0 25.0 L 435.0 25.7 L 440.0 26.3 L 445.0 26.5 L 450.0 26.6 L 455.0 26.3 L 460.0 25.9 L 465.0 25.3 L 470.0 24.4 L 475.0 23.4 L 480.0 22.3 L 485.0 21.0 L 490.0 19.7 L 495.0 18.4 L 500.0 17.0 L 505.0 15.7 L 510.0 14.4 L 515.0 13.3 L 520.0 12.3 L 525.0 11.4 L 530.0 10.7 L 535.0 10.1 L 540.0 9.8 L 545.0 9.6 L 550.0 9.7 L 555.0 9.9 L 560.0 10.3 L 565.0 10.8 L 570.0 11.5 L 575.0 12.3 L 580.0 13.1 L 585.0 14.1 L 590.0 15.1 L 595.0 16.0 L 600.0 17.0 L 605.0 17.9 L 610.0 18.8 L 615.0 19.6 L 620.0 20.3 L 625.0 20.8 L 630.0 21.3 L 635.0 21.6 L 640.0 21.8 L 645.0 21.8 L 650.0 21.8 L 655.0 21.6 L 660.0 21.3 L 665.0 20.9 L 670.0 20.5 L 675.0 19.9 L 680.0 19.4 L 685.0 18.8 L 690.0 18.2 L 695.0 17.6 L 700.0 17.0 L 705.0 16.5 L 710.0 16.0 L 715.0 15.5 L 720.0 15.2 L 725.0 14.9 L 730.0 14.6 L 735.0 14.5 L 740.0 14.4 L 745.0 14.4 L 750.0 14.5 L 755.0 14.6 L 760.0 14.7 L 765.0 15.0 L 770.0 15.2 L 775.0 15.5 L 780.0 15.8 L 785.0 16.1 L 790.0 16.4 L 795.0 16.7 L 800.0 17.0 L 805.0 17.3 L 810.0 17.5 L 815.0 17.7 L 820.0 17.9 L 825.0 18.0 L 830.0 18.2 L 835.0 18.2 L 840.0 18.3 L 845.0 18.3 L 850.0 18.3 L 855.0 18.2 L 860.0 18.1 L 865.0 18.1 L 870.0 17.9 L 875.0 17.8 L 880.0 17.7 L 885.0 17.5 L 890.0 17.3 L 895.0 17.2 L 900.0 17.0 L 905.0 16.8 L 910.0 16.7 L 915.0 16.5 L 920.0 16.3 L 925.0 16.2 L 930.0 16.1 L 935.0 15.9 L 940.0 15.9 L 945.0 15.8 L 950.0 15.7 L 955.0 15.7 L 960.0 15.7 L 965.0 15.8 L 970.0 15.8 L 975.0 16.0 L 980.0 16.1 L 985.0 16.3 L 990.0 16.5 L 995.0 16.7 L 1000.0 17.0 L 1005.0 17.3 L 1010.0 17.6 L 1015.0 17.9 L 1020.0 18.2 L 1025.0 18.5 L 1030.0 18.8 L 1035.0 19.0 L 1040.0 19.3 L 1045.0 19.4 L 1050.0 19.5 L 1055.0 19.6 L 1060.0 19.6 L 1065.0 19.5 L 1070.0 19.4 L 1075.0 19.1 L 1080.0 18.8 L 1085.0 18.5 L 1090.0 18.0 L 1095.0 17.5 L 1100.0 17.0 L 1105.0 16.4 L 1110.0 15.8 L 1115.0 15.2 L 1120.0 14.6 L 1125.0 14.1 L 1130.0 13.5 L 1135.0 13.1 L 1140.0 12.7 L 1145.0 12.4 L 1150.0 12.2 L 1155.0 12.2 L 1160.0 12.2 L 1165.0 12.4 L 1170.0 12.7 L 1175.0 13.2 L 1180.0 13.7 L 1185.0 14.4 L 1190.0 15.2 L 1195.0 16.1 L 1200.0 17.0"></path>
+</svg></div>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Why this exists</span>
+        <h2>Built around one specific role.</h2>
+      </div>
+      <div class="panel-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="panel-card" style="cursor:default;">
+          <span class="readout">THE ROLE</span>
+          <h3 style="font-size:17px;">Optimus, Policy</h3>
+          <p>The Optimus Policy team owns robot learning end to end — reinforcement or imitation learning, production PyTorch, distributed training, and shipping to real hardware. Every problem here traces back to that description, not a generic FAANG interview list.</p>
+        </div>
+        <div class="panel-card" style="cursor:default;">
+          <span class="readout">THE TRANSFER</span>
+          <h3 style="font-size:17px;">HIL to sim-to-real</h3>
+          <p>Years of TD3/DDPG/PPO design and hardware-in-the-loop validation on Typhoon HIL map directly onto sim-to-real transfer and safety-critical real-time control — the Learn section makes that mapping explicit throughout.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Optimus Prep · a private study tool, runs entirely in your browser · &copy; <span data-year></span> Sohag Kumar Saha</p>
+    <div class="foot-links">
+      <a href="learn.html">Learn</a>
+      <a href="practice.html">Practice</a>
+      <a href="mock.html">Mock Interview</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/theme.js"></script>
+<script src="js/main.js"></script>
+<script>
+  (function(){
+    var svg = document.querySelector('.brand-mark');
+  })();
+</script>
+</body>
+</html>

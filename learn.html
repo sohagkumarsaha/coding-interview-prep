@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn — Optimus Prep</title>
+<meta name="description" content="DSA patterns, RL implementation building blocks, system design drills, and a Q&A bank for the Tesla Optimus RL Engineer interview.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Crect x='1' y='1' width='24' height='24' rx='5' fill='%230F1319'/%3E%3Cpath d='M5 14 L9 14 L11 8 L14 18 L16 12 L21 12' stroke='%2352B8AF' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="1" y="1" width="24" height="24" rx="5" stroke="var(--signal)" stroke-width="1.6"/>
+        <path d="M5 14 L9 14 L11 8 L14 18 L16 12 L21 12" stroke="var(--signal)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>OPTIMUS PREP<small>SOHAG K. SAHA</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="learn.html" class="active">Learn</a>
+      <a href="practice.html">Practice</a>
+      <a href="mock.html">Mock Interview</a>
+    </nav>
+    <div class="nav-right">
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to night mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
+        <span class="knob"></span>
+      </button>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-label="Toggle menu"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section-tight">
+    <div class="wrap">
+      <span class="eyebrow">Reference library</span>
+      <h1 style="font-size: 34px; margin-top:10px;">Learn</h1>
+      <p style="color:var(--ink-soft); margin-top:8px; max-width:62ch;">Every entry ships with the same shape: the problem as it would actually be asked, the reasoning to state out loud, working code, and complexity. Search within a tab, or jump straight to a category.</p>
+
+      <div style="margin-top:26px; display:flex; gap:16px; flex-wrap:wrap; align-items:center; justify-content:space-between;">
+        <div class="chip-row" role="tablist" aria-label="Learning categories">
+          <button class="chip learn-tab active" data-tab="dsa" role="tab">DSA Patterns</button>
+          <button class="chip learn-tab" data-tab="rl" role="tab">RL Implementation</button>
+          <button class="chip learn-tab" data-tab="sysdesign" role="tab">System Design</button>
+          <button class="chip learn-tab" data-tab="qa" role="tab">Q&amp;A Bank</button>
+        </div>
+        <input type="search" id="learn-search" class="sidebar search" style="max-width:240px; margin-bottom:0;" placeholder="Search this tab\u2026">
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="learn-panel" data-panel="dsa"></div>
+      <div class="learn-panel" data-panel="rl" hidden></div>
+      <div class="learn-panel" data-panel="sysdesign" hidden></div>
+      <div class="learn-panel" data-panel="qa" hidden></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Optimus Prep · a private study tool, runs entirely in your browser · &copy; <span data-year></span> Sohag Kumar Saha</p>
+    <div class="foot-links">
+      <a href="index.html">Home</a>
+      <a href="practice.html">Practice</a>
+      <a href="mock.html">Mock Interview</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/theme.js"></script>
+<script src="js/main.js"></script>
+<script src="data/dsa.js"></script>
+<script src="data/rl.js"></script>
+<script src="data/sysdesign.js"></script>
+<script src="data/qa.js"></script>
+<script src="js/learn.js"></script>
+</body>
+</html>

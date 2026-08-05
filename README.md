@@ -6,22 +6,7 @@ A self-contained interview lab for the Tesla Optimus Reinforcement Learning Engi
 
 Everything runs client-side. Python execution is powered by [Pyodide](https://pyodide.org) (real CPython compiled to WebAssembly) — there is no backend, no login, and no data ever leaves the browser. Progress and mock-interview history are stored in `localStorage` on your own machine.
 
-## Redeploying after changes
-
-The site is already live, pushed from a folder named `coding-interview-prep` at the root of the `sohagkumarsaha.github.io` repository. To ship an update:
-
-```bash
-cd path/to/sohagkumarsaha.github.io
-git pull
-# copy the updated coding-interview-prep/ folder in, overwriting the old one
-git add coding-interview-prep
-git commit -m "Update Optimus Prep site"
-git push origin main
-```
-
-Give it 30–60 seconds after pushing, then refresh **https://sohagkumarsaha.github.io/coding-interview-prep/** (a hard refresh — Ctrl/Cmd+Shift+R — helps if the browser cached the old CSS/JS).
-
-## Setting it up from scratch elsewhere
+## Hosting at `sohagkumarsaha.github.io/coding`
 
 All internal links and asset paths in this project are relative (`css/styles.css`, `js/theme.js`, `data/dsa.js`, ...), so it works identically whether it's the root of its own repository or nested in a subfolder, under any folder name — no code changes needed either way.
 
@@ -44,10 +29,10 @@ GitHub Pages serves a project repo automatically at `https://<username>.github.i
 
 ### Option B — nested inside your `sohagkumarsaha.github.io` repo (what's actually deployed)
 
-1. Clone `sohagkumarsaha.github.io` (the repo that serves your root site).
-2. Copy this project's contents into a `coding-interview-prep/` folder inside it, so you end up with `sohagkumarsaha.github.io/coding-interview-prep/index.html`, `sohagkumarsaha.github.io/coding-interview-prep/css/…`, etc.
+1. Clone `sohagkumarsaha.github.io` (the repo that already serves your root site).
+2. Copy this project's contents into a `coding/` folder inside it, so you end up with `sohagkumarsaha.github.io/coding/index.html`, `sohagkumarsaha.github.io/coding/css/…`, etc.
 3. Commit and push to whichever branch that repo's Pages is configured to serve (usually `main`).
-4. Visit **https://sohagkumarsaha.github.io/coding-interview-prep/**.
+4. Visit **https://sohagkumarsaha.github.io/coding/** — same URL, same result.
 
 ## Testing locally before you push
 

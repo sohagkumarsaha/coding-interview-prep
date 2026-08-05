@@ -19,20 +19,20 @@ GitHub Pages serves a project repo automatically at `https://<username>.github.i
    git add .
    git commit -m "Optimus interview prep site"
    git branch -M main
-   git remote add origin https://github.com/sohagkumarsaha/coding.git
+   git remote add origin https://github.com/sohagkumarsaha/coding-interview-prep.git
    git push -u origin main
    ```
 3. On GitHub: repo → **Settings → Pages** → Source: **Deploy from a branch** → Branch: **main**, folder **/(root)** → **Save**.
-4. Wait about a minute, then visit **https://sohagkumarsaha.github.io/coding/**.
+4. Wait about a minute, then visit **https://sohagkumarsaha.github.io/coding-interview-prep/**.
 
 ### Option B — nested inside your existing `sohagkumarsaha.github.io` repo
 
 If you'd rather keep everything in your one user-pages repo:
 
 1. Clone `sohagkumarsaha.github.io` (the repo that already serves your root site).
-2. Copy this project's contents into a `coding/` folder inside it, so you end up with `sohagkumarsaha.github.io/coding/index.html`, `sohagkumarsaha.github.io/coding/css/…`, etc.
+2. Copy this project's contents into a `coding/` folder inside it, so you end up with `sohagkumarsaha.github.io/coding/index.html`, `sohagkumarsaha.github.io/coding-interview-prep/css/…`, etc.
 3. Commit and push to whichever branch that repo's Pages is configured to serve (usually `main`).
-4. Visit **https://sohagkumarsaha.github.io/coding/** — same URL, same result.
+4. Visit **https://sohagkumarsaha.github.io/coding-interview-prep/** — same URL, same result.
 
 ## Testing locally before you push
 

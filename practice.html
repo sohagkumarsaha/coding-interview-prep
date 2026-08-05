@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Practice — Optimus Prep</title>
-<meta name="description" content="Write and run real Python against DSA and RL problems, with instant test feedback, right in your browser.">
+<meta name="description" content="Write and run real Python against DSA, Blind 75, and RL problems, with instant test feedback, right in your browser.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Crect x='1' y='1' width='24' height='24' rx='5' fill='%230F1319'/%3E%3Cpath d='M5 14 L9 14 L11 8 L14 18 L16 12 L21 12' stroke='%2352B8AF' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,7 +47,7 @@
       <span class="eyebrow">Live sandbox</span>
       <div style="display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:10px;">
         <h1 style="font-size: 34px; margin-top:10px;">Practice</h1>
-        <span id="solved-count" class="tag tag-signal" style="margin-top:10px;">0 / 32 solved</span>
+        <span id="solved-count" class="tag tag-signal" style="margin-top:10px;">0 / 107 solved</span>
       </div>
 
       <div class="app-layout" style="margin-top:22px;">
@@ -56,6 +56,7 @@
           <div class="chip-row" id="filter-chips" style="margin-bottom:14px;">
             <button class="chip active" data-filter="all">All</button>
             <button class="chip" data-filter="dsa">DSA</button>
+            <button class="chip" data-filter="blind75">Blind 75</button>
             <button class="chip" data-filter="rl">RL</button>
           </div>
           <ul id="problem-list"></ul>
@@ -111,6 +112,7 @@
 <script src="js/theme.js"></script>
 <script src="js/main.js"></script>
 <script src="data/dsa.js"></script>
+<script src="data/blind75.js"></script>
 <script src="data/rl.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>

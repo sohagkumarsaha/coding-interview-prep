@@ -55,16 +55,16 @@ document.addEventListener("DOMContentLoaded", () => {
     selectedDuration = parseInt(selectOption(durationOptions, btn, "duration"), 10);
   }));
 
+  function taggedDsa() { return DSA_PROBLEMS.map((p, i) => ({ ...p, source: "dsa", label: "P-" + String(i + 1).padStart(2, "0") })); }
+  function taggedBlind75() { return BLIND75_PROBLEMS.map((p) => ({ ...p, pattern: p.category, source: "blind75", label: p.id.replace("b75-", "B-") })); }
+  function taggedRl() { return RL_PROBLEMS.filter((p) => !p.torch).map((p, i) => ({ ...p, source: "rl", label: "R-" + String(i + 1).padStart(2, "0") })); }
+
   function pickRandomProblem(track) {
     let pool = [];
-    if (track === "dsa") pool = DSA_PROBLEMS.map((p, i) => ({ ...p, source: "dsa", label: "P-" + String(i + 1).padStart(2, "0") }));
-    else if (track === "rl") pool = RL_PROBLEMS.filter((p) => !p.torch).map((p, i) => ({ ...p, source: "rl", label: "R-" + String(i + 1).padStart(2, "0") }));
-    else {
-      pool = [
-        ...DSA_PROBLEMS.map((p, i) => ({ ...p, source: "dsa", label: "P-" + String(i + 1).padStart(2, "0") })),
-        ...RL_PROBLEMS.filter((p) => !p.torch).map((p, i) => ({ ...p, source: "rl", label: "R-" + String(i + 1).padStart(2, "0") })),
-      ];
-    }
+    if (track === "dsa") pool = taggedDsa();
+    else if (track === "blind75") pool = taggedBlind75();
+    else if (track === "rl") pool = taggedRl();
+    else pool = [...taggedDsa(), ...taggedBlind75(), ...taggedRl()];
     return pool[Math.floor(Math.random() * pool.length)];
   }
 
@@ -206,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
     list.push({
       date: new Date().toLocaleString(),
       problem: currentProblem.title,
-      track: currentProblem.source === "dsa" ? "DSA" : "RL",
+      track: currentProblem.source === "dsa" ? "DSA" : currentProblem.source === "blind75" ? "Blind 75" : "RL",
       durationSeconds: selectedDuration,
       elapsedSeconds: Math.min(elapsedSeconds, selectedDuration),
       rating: selectedRating,

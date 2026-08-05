@@ -1,45 +1,60 @@
 # Optimus Prep
 
-A self-contained interview lab for the Tesla Optimus Reinforcement Learning Engineer, Policy role: a pattern library (DSA, RL implementation, system design, Q&A), a live in-browser Python IDE, and a timed mock-interview mode.
+**Live at [sohagkumarsaha.github.io/coding-interview-prep](https://sohagkumarsaha.github.io/coding-interview-prep/)**
+
+A self-contained interview lab for the Tesla Optimus Reinforcement Learning Engineer, Policy role: a pattern library (DSA, the complete Blind 75, RL implementation, system design, Q&A), a live in-browser Python IDE, and a timed mock-interview mode.
 
 Everything runs client-side. Python execution is powered by [Pyodide](https://pyodide.org) (real CPython compiled to WebAssembly) — there is no backend, no login, and no data ever leaves the browser. Progress and mock-interview history are stored in `localStorage` on your own machine.
 
-## Hosting at `sohagkumarsaha.github.io/coding`
+## Redeploying after changes
 
-All internal links and asset paths in this project are relative (`css/styles.css`, `js/theme.js`, `data/dsa.js`, ...), so it works identically whether it's the root of its own repository or nested in a subfolder — no code changes needed either way.
+The site is already live, pushed from a folder named `coding-interview-prep` at the root of the `sohagkumarsaha.github.io` repository. To ship an update:
 
-### Option A — a dedicated repo named `coding` (simplest)
+```bash
+cd path/to/sohagkumarsaha.github.io
+git pull
+# copy the updated coding-interview-prep/ folder in, overwriting the old one
+git add coding-interview-prep
+git commit -m "Update Optimus Prep site"
+git push origin main
+```
 
-GitHub Pages serves a project repo automatically at `https://<username>.github.io/<repo-name>/`, so a repo literally named `coding` lands exactly on the URL you want.
+Give it 30–60 seconds after pushing, then refresh **https://sohagkumarsaha.github.io/coding-interview-prep/** (a hard refresh — Ctrl/Cmd+Shift+R — helps if the browser cached the old CSS/JS).
 
-1. Create a new empty repository on GitHub named `coding` (github.com/new). Don't add a README/gitignore from the GitHub UI — you're pushing this project's own files.
-2. On your machine, from inside this project folder:
+## Setting it up from scratch elsewhere
+
+All internal links and asset paths in this project are relative (`css/styles.css`, `js/theme.js`, `data/dsa.js`, ...), so it works identically whether it's the root of its own repository or nested in a subfolder, under any folder name — no code changes needed either way.
+
+### Option A — a dedicated repo (simplest)
+
+GitHub Pages serves a project repo automatically at `https://<username>.github.io/<repo-name>/`. Naming the repo itself `coding-interview-prep` lands exactly on that URL:
+
+1. Create a new empty repository on GitHub named `coding-interview-prep`. Don't add a README/gitignore from the GitHub UI — you're pushing this project's own files.
+2. From inside this project folder:
    ```bash
    git init
    git add .
    git commit -m "Optimus interview prep site"
    git branch -M main
-   git remote add origin https://github.com/sohagkumarsaha/coding.git
+   git remote add origin https://github.com/sohagkumarsaha/coding-interview-prep.git
    git push -u origin main
    ```
 3. On GitHub: repo → **Settings → Pages** → Source: **Deploy from a branch** → Branch: **main**, folder **/(root)** → **Save**.
-4. Wait about a minute, then visit **https://sohagkumarsaha.github.io/coding/**.
+4. Wait about a minute, then visit **https://sohagkumarsaha.github.io/coding-interview-prep/**.
 
-### Option B — nested inside your existing `sohagkumarsaha.github.io` repo
+### Option B — nested inside your `sohagkumarsaha.github.io` repo (what's actually deployed)
 
-If you'd rather keep everything in your one user-pages repo:
-
-1. Clone `sohagkumarsaha.github.io` (the repo that already serves your root site).
-2. Copy this project's contents into a `coding/` folder inside it, so you end up with `sohagkumarsaha.github.io/coding/index.html`, `sohagkumarsaha.github.io/coding/css/…`, etc.
+1. Clone `sohagkumarsaha.github.io` (the repo that serves your root site).
+2. Copy this project's contents into a `coding-interview-prep/` folder inside it, so you end up with `sohagkumarsaha.github.io/coding-interview-prep/index.html`, `sohagkumarsaha.github.io/coding-interview-prep/css/…`, etc.
 3. Commit and push to whichever branch that repo's Pages is configured to serve (usually `main`).
-4. Visit **https://sohagkumarsaha.github.io/coding/** — same URL, same result.
+4. Visit **https://sohagkumarsaha.github.io/coding-interview-prep/**.
 
 ## Testing locally before you push
 
 Opening `index.html` directly by double-clicking it will mostly work, but the most reliable match for production is a tiny local server:
 
 ```bash
-cd coding
+cd coding-interview-prep
 python3 -m http.server 8000
 # then open http://localhost:8000 in your browser
 ```
@@ -49,9 +64,9 @@ Any modern browser (WebAssembly support required — anything from the last seve
 ## Project structure
 
 ```
-coding/
+coding-interview-prep/
 ├── index.html          Landing page
-├── learn.html           Reference library (DSA / RL / system design / Q&A)
+├── learn.html           Reference library (DSA / Blind 75 / RL / system design / Q&A)
 ├── practice.html        Problem browser + live Python IDE
 ├── mock.html             Timed mock-interview mode + session history
 ├── css/
@@ -65,7 +80,8 @@ coding/
 │   ├── practice.js            Practice page logic
 │   └── mock.js                 Mock interview flow, timer, history
 └── data/
-    ├── dsa.js             22 DSA problems: prompt, approach, solution, tests
+    ├── dsa.js             22 curated DSA problems: prompt, approach, solution, tests
+    ├── blind75.js           All 75 Blind 75 problems, by category, original write-ups
     ├── rl.js               10 RL implementation problems
     ├── sysdesign.js         6 system design problems
     └── qa.js                 Rapid-fire Q&A bank
@@ -73,7 +89,7 @@ coding/
 
 ## Adding or editing problems
 
-Each entry in `data/dsa.js` / `data/rl.js` is a plain JS object:
+Each entry in `data/dsa.js` / `data/blind75.js` / `data/rl.js` is a plain JS object. Blind 75 entries use a `category` field (Array, Binary, Dynamic Programming, Graph, Interval, Linked List, Matrix, String, Tree, Heap — the list's own standard categories) instead of `pattern`, but are otherwise identical in shape:
 
 ```js
 {
@@ -95,3 +111,7 @@ Each entry in `data/dsa.js` / `data/rl.js` is a plain JS object:
 ## Notes on the Python runtime
 
 Pyodide ships the standard library plus NumPy; it does **not** include PyTorch. Problems that need PyTorch (the PPO loss, REINFORCE loss, and the actor-critic network definition) are marked accordingly and are meant for reading/whiteboard practice in this tool — copy them into a local environment with `torch` installed to actually run them.
+
+## About the Blind 75 set
+
+`data/blind75.js` covers the full Blind 75 — the curated list originated by Yangshun Tay (see [techinterviewhandbook.org/grind75](https://www.techinterviewhandbook.org/grind75) for the author's newer, customizable successor, Grind 75). The category breakdown (Array 10, Binary 5, Dynamic Programming 11, Graph 8, Interval 5, Linked List 6, Matrix 4, String 10, Tree 14, Heap 2 net-new) matches the original list; every prompt, approach explanation, and solution here is written from scratch for this site rather than copied from LeetCode. All 75 solutions were validated end to end against real Python before shipping.

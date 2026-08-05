@@ -137,16 +137,48 @@ document.addEventListener("DOMContentLoaded", () => {
     `).join("");
   }
 
+  function blind75Accordion() {
+    const categories = [];
+    BLIND75_PROBLEMS.forEach((p) => { if (!categories.includes(p.category)) categories.push(p.category); });
+    return categories.map((cat) => {
+      const items = BLIND75_PROBLEMS.filter((p) => p.category === cat);
+      return `
+        <div style="margin-bottom:26px;">
+          <div class="group-label" style="padding-left:0;">${escapeHtml(cat)} &middot; ${items.length}</div>
+          ${items.map((p) => `
+            <details class="acc-item" data-search="${escapeHtml((p.title + ' ' + p.category).toLowerCase())}">
+              <summary>
+                <span class="num">${escapeHtml(p.id.replace('b75-', 'B-'))}</span>
+                <span class="ttl">${escapeHtml(p.title)}</span>
+                <span class="tag tag-amber">${escapeHtml(p.category)}</span>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+              </summary>
+              <div class="acc-body">
+                <div><h5>Problem</h5><p class="prose">${escapeHtml(p.prompt)}</p></div>
+                ${p.example ? `<div><h5>Example</h5><pre class="example">${escapeHtml(p.example)}</pre></div>` : ""}
+                <div><h5>Approach</h5><p class="prose">${escapeHtml(p.approach)}</p></div>
+                <div><h5>Python Solution</h5>${renderCodeBlock(p.solution)}</div>
+                <div class="callout"><strong>Complexity —</strong> ${escapeHtml(p.complexity)}</div>
+              </div>
+            </details>
+          `).join("")}
+        </div>
+      `;
+    }).join("");
+  }
+
   const dsaPanel = document.querySelector('[data-panel="dsa"]');
+  const blind75Panel = document.querySelector('[data-panel="blind75"]');
   const rlPanel = document.querySelector('[data-panel="rl"]');
   const sdPanel = document.querySelector('[data-panel="sysdesign"]');
   const qaPanel = document.querySelector('[data-panel="qa"]');
   if (dsaPanel) dsaPanel.innerHTML = dsaAccordion();
+  if (blind75Panel) blind75Panel.innerHTML = blind75Accordion();
   if (rlPanel) rlPanel.innerHTML = rlAccordion();
   if (sdPanel) sdPanel.innerHTML = sysDesignAccordion();
   if (qaPanel) qaPanel.innerHTML = qaAccordion();
 
   // Activate tab from URL hash, default to dsa
   const initial = (location.hash || "#dsa").slice(1);
-  activateTab(["dsa", "rl", "sysdesign", "qa"].includes(initial) ? initial : "dsa");
+  activateTab(["dsa", "blind75", "rl", "sysdesign", "qa"].includes(initial) ? initial : "dsa");
 });

@@ -4,7 +4,7 @@ A self-contained interview lab for the Tesla Optimus Reinforcement Learning Engi
 
 Everything runs client-side. Python execution is powered by [Pyodide](https://pyodide.org) (real CPython compiled to WebAssembly) — there is no backend, no login, and no data ever leaves the browser. Progress and mock-interview history are stored in `localStorage` on your own machine.
 
-## Hosting at `sohagkumarsaha.github.io/coding`
+## Hosting at `sohagkumarsaha.github.io/coding-interview-prep`
 
 All internal links and asset paths in this project are relative (`css/styles.css`, `js/theme.js`, `data/dsa.js`, ...), so it works identically whether it's the root of its own repository or nested in a subfolder — no code changes needed either way.
 

@@ -167,18 +167,86 @@ document.addEventListener("DOMContentLoaded", () => {
     }).join("");
   }
 
+  function faangAccordion() {
+    const categories = [];
+    FAANG_EXTRA_PROBLEMS.forEach((p) => { if (!categories.includes(p.category)) categories.push(p.category); });
+    return categories.map((cat) => {
+      const items = FAANG_EXTRA_PROBLEMS.filter((p) => p.category === cat);
+      return `
+        <div style="margin-bottom:26px;">
+          <div class="group-label" style="padding-left:0;">${escapeHtml(cat)} &middot; ${items.length}</div>
+          ${items.map((p) => `
+            <details class="acc-item" data-search="${escapeHtml((p.title + ' ' + p.category).toLowerCase())}">
+              <summary>
+                <span class="num">${escapeHtml(p.id.replace('fx-', 'X-'))}</span>
+                <span class="ttl">${escapeHtml(p.title)}</span>
+                <span class="tag tag-signal">${escapeHtml(p.category)}</span>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+              </summary>
+              <div class="acc-body">
+                <div><h5>Problem</h5><p class="prose">${escapeHtml(p.prompt)}</p></div>
+                ${p.example ? `<div><h5>Example</h5><pre class="example">${escapeHtml(p.example)}</pre></div>` : ""}
+                <div><h5>Approach</h5><p class="prose">${escapeHtml(p.approach)}</p></div>
+                <div><h5>Python Solution</h5>${renderCodeBlock(p.solution)}</div>
+                <div class="callout"><strong>Complexity —</strong> ${escapeHtml(p.complexity)}</div>
+              </div>
+            </details>
+          `).join("")}
+        </div>
+      `;
+    }).join("");
+  }
+
+  function pythonMasteryAccordion() {
+    return PYTHON_MASTERY.map((tier, ti) => `
+      <div style="margin-bottom:30px;">
+        <div class="group-label" style="padding-left:0; font-size:13px;">${escapeHtml(tier.tier)}</div>
+        ${tier.items.map((item, ii) => `
+          <details class="acc-item" data-search="${escapeHtml((tier.tier + ' ' + item.q).toLowerCase())}">
+            <summary>
+              <span class="num">${ti + 1}.${ii + 1}</span>
+              <span class="ttl">${escapeHtml(item.q)}</span>
+              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+            </summary>
+            <div class="acc-body">
+              <p class="prose">${escapeHtml(item.a)}</p>
+              ${item.example ? renderCodeBlock(item.example) : ""}
+              ${item.followups && item.followups.length ? `
+                <div>
+                  <h5>Follow-ups</h5>
+                  <div style="display:flex; flex-direction:column; gap:10px;">
+                    ${item.followups.map((f) => `
+                      <div style="border-left:2px solid var(--line-strong); padding-left:12px;">
+                        <div style="font-size:13.5px; font-weight:600; margin-bottom:3px;">${escapeHtml(f.q)}</div>
+                        <div class="prose" style="font-size:13.5px;">${escapeHtml(f.a)}</div>
+                      </div>
+                    `).join("")}
+                  </div>
+                </div>
+              ` : ""}
+            </div>
+          </details>
+        `).join("")}
+      </div>
+    `).join("");
+  }
+
   const dsaPanel = document.querySelector('[data-panel="dsa"]');
   const blind75Panel = document.querySelector('[data-panel="blind75"]');
+  const faangPanel = document.querySelector('[data-panel="faang"]');
+  const pythonPanel = document.querySelector('[data-panel="python"]');
   const rlPanel = document.querySelector('[data-panel="rl"]');
   const sdPanel = document.querySelector('[data-panel="sysdesign"]');
   const qaPanel = document.querySelector('[data-panel="qa"]');
   if (dsaPanel) dsaPanel.innerHTML = dsaAccordion();
   if (blind75Panel) blind75Panel.innerHTML = blind75Accordion();
+  if (faangPanel) faangPanel.innerHTML = faangAccordion();
+  if (pythonPanel) pythonPanel.innerHTML = pythonMasteryAccordion();
   if (rlPanel) rlPanel.innerHTML = rlAccordion();
   if (sdPanel) sdPanel.innerHTML = sysDesignAccordion();
   if (qaPanel) qaPanel.innerHTML = qaAccordion();
 
   // Activate tab from URL hash, default to dsa
   const initial = (location.hash || "#dsa").slice(1);
-  activateTab(["dsa", "blind75", "rl", "sysdesign", "qa"].includes(initial) ? initial : "dsa");
+  activateTab(["dsa", "blind75", "faang", "python", "rl", "sysdesign", "qa"].includes(initial) ? initial : "dsa");
 });

@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const ALL_PROBLEMS = [
     ...DSA_PROBLEMS.map((p, i) => ({ ...p, source: "dsa", label: "P-" + String(i + 1).padStart(2, "0") })),
     ...BLIND75_PROBLEMS.map((p) => ({ ...p, pattern: p.category, source: "blind75", label: p.id.replace("b75-", "B-") })),
+    ...FAANG_EXTRA_PROBLEMS.map((p) => ({ ...p, pattern: p.category, source: "faang", label: p.id.replace("fx-", "X-") })),
     ...RL_PROBLEMS.map((p, i) => ({ ...p, source: "rl", label: "R-" + String(i + 1).padStart(2, "0") })),
   ];
 

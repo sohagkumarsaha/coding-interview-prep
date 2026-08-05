@@ -57,14 +57,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function taggedDsa() { return DSA_PROBLEMS.map((p, i) => ({ ...p, source: "dsa", label: "P-" + String(i + 1).padStart(2, "0") })); }
   function taggedBlind75() { return BLIND75_PROBLEMS.map((p) => ({ ...p, pattern: p.category, source: "blind75", label: p.id.replace("b75-", "B-") })); }
+  function taggedFaang() { return FAANG_EXTRA_PROBLEMS.map((p) => ({ ...p, pattern: p.category, source: "faang", label: p.id.replace("fx-", "X-") })); }
   function taggedRl() { return RL_PROBLEMS.filter((p) => !p.torch).map((p, i) => ({ ...p, source: "rl", label: "R-" + String(i + 1).padStart(2, "0") })); }
 
   function pickRandomProblem(track) {
     let pool = [];
     if (track === "dsa") pool = taggedDsa();
     else if (track === "blind75") pool = taggedBlind75();
+    else if (track === "faang") pool = taggedFaang();
     else if (track === "rl") pool = taggedRl();
-    else pool = [...taggedDsa(), ...taggedBlind75(), ...taggedRl()];
+    else pool = [...taggedDsa(), ...taggedBlind75(), ...taggedFaang(), ...taggedRl()];
     return pool[Math.floor(Math.random() * pool.length)];
   }
 
@@ -206,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
     list.push({
       date: new Date().toLocaleString(),
       problem: currentProblem.title,
-      track: currentProblem.source === "dsa" ? "DSA" : currentProblem.source === "blind75" ? "Blind 75" : "RL",
+      track: currentProblem.source === "dsa" ? "DSA" : currentProblem.source === "blind75" ? "Blind 75" : currentProblem.source === "faang" ? "FAANG Ext." : "RL",
       durationSeconds: selectedDuration,
       elapsedSeconds: Math.min(elapsedSeconds, selectedDuration),
       rating: selectedRating,

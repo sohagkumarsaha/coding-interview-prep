@@ -30,7 +30,7 @@ GitHub Pages serves a project repo automatically at `https://<username>.github.i
 If you'd rather keep everything in your one user-pages repo:
 
 1. Clone `sohagkumarsaha.github.io` (the repo that already serves your root site).
-2. Copy this project's contents into a `coding/` folder inside it, so you end up with `sohagkumarsaha.github.io/coding/index.html`, `sohagkumarsaha.github.io/coding-interview-prep/css/…`, etc.
+2. Copy this project's contents into a `coding/` folder inside it, so you end up with `sohagkumarsaha.github.io/coding-interview-prep/index.html`, `sohagkumarsaha.github.io/coding-interview-prep/css/…`, etc.
 3. Commit and push to whichever branch that repo's Pages is configured to serve (usually `main`).
 4. Visit **https://sohagkumarsaha.github.io/coding-interview-prep/** — same URL, same result.
 

@@ -29,6 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const reviewSolution = document.getElementById("review-solution");
   const reviewComplexity = document.getElementById("review-complexity");
   const reviewApproach = document.getElementById("review-approach");
+  const reviewTechnique = document.getElementById("review-technique");
+  const reviewWhy = document.getElementById("review-why");
   const ratingButtons = document.querySelectorAll("#rating-options .option-btn");
   const saveSessionBtn = document.getElementById("save-session-btn");
   const newSessionBtn = document.getElementById("new-session-btn");
@@ -57,7 +59,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function taggedDsa() { return DSA_PROBLEMS.map((p, i) => ({ ...p, source: "dsa", label: "P-" + String(i + 1).padStart(2, "0") })); }
   function taggedBlind75() { return BLIND75_PROBLEMS.map((p) => ({ ...p, pattern: p.category, source: "blind75", label: p.id.replace("b75-", "B-") })); }
-  function taggedFaang() { return FAANG_EXTRA_PROBLEMS.map((p) => ({ ...p, pattern: p.category, source: "faang", label: p.id.replace("fx-", "X-") })); }
+  function taggedFaang() {
+    return [
+      ...FAANG_EXTRA_PROBLEMS.map((p) => ({ ...p, pattern: p.category, source: "faang", label: p.id.replace("fx-", "X-") })),
+      ...NEETCODE_EXTRA_PROBLEMS.map((p) => ({ ...p, pattern: p.category, source: "faang", label: p.id.replace("nc-", "N-") })),
+    ];
+  }
   function taggedRl() { return RL_PROBLEMS.filter((p) => !p.torch).map((p, i) => ({ ...p, source: "rl", label: "R-" + String(i + 1).padStart(2, "0") })); }
 
   function pickRandomProblem(track) {
@@ -170,8 +177,11 @@ document.addEventListener("DOMContentLoaded", () => {
     sessionScreen.hidden = true;
     reviewPanel.hidden = false;
     reviewApproach.textContent = currentProblem.approach;
+    reviewTechnique.textContent = currentProblem.pattern || currentProblem.category;
     reviewSolution.innerHTML = renderCodeBlock(currentProblem.solution);
+    highlightCode(reviewSolution);
     reviewComplexity.textContent = currentProblem.complexity;
+    reviewWhy.textContent = currentProblem.whyComplexity || "\u2014";
     selectedRating = null;
     ratingButtons.forEach((b) => b.classList.remove("selected"));
   });
@@ -208,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
     list.push({
       date: new Date().toLocaleString(),
       problem: currentProblem.title,
-      track: currentProblem.source === "dsa" ? "DSA" : currentProblem.source === "blind75" ? "Blind 75" : currentProblem.source === "faang" ? "FAANG Ext." : "RL",
+      track: currentProblem.source === "dsa" ? "DSA" : currentProblem.source === "blind75" ? "Blind 75" : currentProblem.source === "faang" ? "NeetCode 150" : "RL",
       durationSeconds: selectedDuration,
       elapsedSeconds: Math.min(elapsedSeconds, selectedDuration),
       rating: selectedRating,

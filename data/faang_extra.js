@@ -13,6 +13,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "import heapq\nfrom collections import defaultdict\n\ndef network_delay_time(times, n, k):\n    # your code here\n    pass\n",
     solution: "import heapq\nfrom collections import defaultdict\n\ndef network_delay_time(times, n, k):\n    graph = defaultdict(list)\n    for u, v, w in times:\n        graph[u].append((v, w))\n    dist = {}\n    heap = [(0, k)]\n    while heap:\n        d, node = heapq.heappop(heap)\n        if node in dist:\n            continue\n        dist[node] = d\n        for nei, w in graph[node]:\n            if nei not in dist:\n                heapq.heappush(heap, (d + w, nei))\n    return max(dist.values()) if len(dist) == n else -1\n",
     complexity: "O(E log V) time, O(V + E) space.",
+    whyComplexity: "Time is O(E log V) because Dijkstra's heap-based implementation does one O(log V) push per edge relaxation across all E edges; space is O(V + E) for the adjacency list and distance map.",
     tests: [{ call: "network_delay_time([[2,1,1],[2,3,1],[3,4,1]], 4, 2)", expected: "2" }]
   },
   {
@@ -23,6 +24,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def find_cheapest_price(n, flights, src, dst, k):\n    # your code here\n    pass\n",
     solution: "def find_cheapest_price(n, flights, src, dst, k):\n    prices = [float('inf')] * n\n    prices[src] = 0\n    for _ in range(k + 1):\n        temp = prices[:]\n        for u, v, w in flights:\n            if prices[u] != float('inf') and prices[u] + w < temp[v]:\n                temp[v] = prices[u] + w\n        prices = temp\n    return prices[dst] if prices[dst] != float('inf') else -1\n",
     complexity: "O(k * E) time, O(V) space.",
+    whyComplexity: "Time is O(k * E) because Bellman-Ford-style relaxation repeats the full edge list k+1 times, once per allowed stop count; space is O(V) for the price array.",
     tests: [{ call: "find_cheapest_price(4, [[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]], 0, 3, 1)", expected: "700" }]
   },
   {
@@ -33,6 +35,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def find_redundant_connection(edges):\n    # your code here\n    pass\n",
     solution: "def find_redundant_connection(edges):\n    n = len(edges)\n    parent = list(range(n + 1))\n    def find(x):\n        while parent[x] != x:\n            parent[x] = parent[parent[x]]\n            x = parent[x]\n        return x\n    for a, b in edges:\n        ra, rb = find(a), find(b)\n        if ra == rb:\n            return [a, b]\n        parent[ra] = rb\n    return []\n",
     complexity: "Nearly O(n) time with union-find, O(n) space.",
+    whyComplexity: "Time is nearly O(n) because union-find with path compression keeps each union/find call nearly constant; space is O(n) for the parent array.",
     tests: [{ call: "find_redundant_connection([[1,2],[1,3],[2,3]])", expected: "[2, 3]" }]
   },
   {
@@ -43,6 +46,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "from collections import deque\n\ndef ladder_length(begin_word, end_word, word_list):\n    # your code here\n    pass\n",
     solution: "from collections import deque\n\ndef ladder_length(begin_word, end_word, word_list):\n    word_set = set(word_list)\n    if end_word not in word_set:\n        return 0\n    queue = deque([(begin_word, 1)])\n    visited = {begin_word}\n    while queue:\n        word, steps = queue.popleft()\n        if word == end_word:\n            return steps\n        for i in range(len(word)):\n            for c in 'abcdefghijklmnopqrstuvwxyz':\n                new_word = word[:i] + c + word[i+1:]\n                if new_word in word_set and new_word not in visited:\n                    visited.add(new_word)\n                    queue.append((new_word, steps + 1))\n    return 0\n",
     complexity: "O(M^2 * N) time for N words of length M, O(M * N) space.",
+    whyComplexity: "Time is O(M^2 * N) for N words of length M, because each word considered generates M*26 possible one-letter-changed neighbors, each an O(M) string construction; space is O(M * N) for the word set and queue.",
     tests: [{ call: "ladder_length('hit', 'cog', ['hot','dot','dog','lot','log','cog'])", expected: "5" }]
   },
 
@@ -55,6 +59,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def unique_paths_with_obstacles(grid):\n    # your code here\n    pass\n",
     solution: "def unique_paths_with_obstacles(grid):\n    rows, cols = len(grid), len(grid[0])\n    dp = [[0]*cols for _ in range(rows)]\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == 1:\n                dp[r][c] = 0\n            elif r == 0 and c == 0:\n                dp[r][c] = 1\n            else:\n                top = dp[r-1][c] if r > 0 else 0\n                left = dp[r][c-1] if c > 0 else 0\n                dp[r][c] = top + left\n    return dp[rows-1][cols-1]\n",
     complexity: "O(rows * cols) time and space.",
+    whyComplexity: "Time is O(rows * cols) because every cell is filled once from its already-computed top and left neighbors; space is O(rows * cols) for the DP grid (reducible to O(cols)).",
     tests: [{ call: "unique_paths_with_obstacles([[0,0,0],[0,1,0],[0,0,0]])", expected: "2" }]
   },
   {
@@ -65,6 +70,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def longest_palindrome_subseq(s):\n    # your code here\n    pass\n",
     solution: "def longest_palindrome_subseq(s):\n    n = len(s)\n    dp = [[0]*n for _ in range(n)]\n    for i in range(n-1, -1, -1):\n        dp[i][i] = 1\n        for j in range(i+1, n):\n            if s[i] == s[j]:\n                dp[i][j] = dp[i+1][j-1] + 2\n            else:\n                dp[i][j] = max(dp[i+1][j], dp[i][j-1])\n    return dp[0][n-1]\n",
     complexity: "O(n^2) time and space.",
+    whyComplexity: "Time is O(n^2) because the interval DP table has O(n^2) cells, each filled in O(1); space is O(n^2) for the table.",
     tests: [{ call: "longest_palindrome_subseq('bbbab')", expected: "4" }]
   },
   {
@@ -75,6 +81,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def num_distinct(s, t):\n    # your code here\n    pass\n",
     solution: "def num_distinct(s, t):\n    m, n = len(s), len(t)\n    dp = [[0]*(n+1) for _ in range(m+1)]\n    for i in range(m+1):\n        dp[i][0] = 1\n    for i in range(1, m+1):\n        for j in range(1, n+1):\n            dp[i][j] = dp[i-1][j]\n            if s[i-1] == t[j-1]:\n                dp[i][j] += dp[i-1][j-1]\n    return dp[m][n]\n",
     complexity: "O(m * n) time and space.",
+    whyComplexity: "Time is O(m * n) because every cell of the DP table is computed once in O(1) from its neighbors; space is O(m * n) for the table.",
     tests: [{ call: "num_distinct('rabbbit', 'rabbit')", expected: "3" }]
   },
 
@@ -87,6 +94,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def jump(nums):\n    # your code here\n    pass\n",
     solution: "def jump(nums):\n    jumps = 0\n    curr_end = 0\n    farthest = 0\n    for i in range(len(nums) - 1):\n        farthest = max(farthest, i + nums[i])\n        if i == curr_end:\n            jumps += 1\n            curr_end = farthest\n    return jumps\n",
     complexity: "O(n) time, O(1) space.",
+    whyComplexity: "Time is O(n) because the greedy scan makes one forward pass, updating the farthest-reachable index and jump count in O(1) per position; space is O(1) for the running trackers.",
     tests: [{ call: "jump([2,3,1,1,4])", expected: "2" }]
   },
   {
@@ -97,6 +105,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def can_complete_circuit(gas, cost):\n    # your code here\n    pass\n",
     solution: "def can_complete_circuit(gas, cost):\n    if sum(gas) < sum(cost):\n        return -1\n    total = 0\n    start = 0\n    for i in range(len(gas)):\n        total += gas[i] - cost[i]\n        if total < 0:\n            start = i + 1\n            total = 0\n    return start\n",
     complexity: "O(n) time, O(1) space.",
+    whyComplexity: "Time is O(n) because the greedy scan makes a single pass, resetting the candidate start in O(1) whenever the running tank goes negative; space is O(1) for the running totals.",
     tests: [{ call: "can_complete_circuit([1,2,3,4,5], [3,4,5,1,2])", expected: "3" }]
   },
   {
@@ -107,6 +116,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "from collections import Counter\n\ndef least_interval(tasks, n):\n    # your code here\n    pass\n",
     solution: "from collections import Counter\n\ndef least_interval(tasks, n):\n    counts = Counter(tasks)\n    max_count = max(counts.values())\n    num_max = sum(1 for c in counts.values() if c == max_count)\n    return max(len(tasks), (max_count - 1) * (n + 1) + num_max)\n",
     complexity: "O(n) time, O(1) space (bounded alphabet of task types).",
+    whyComplexity: "Time is O(n) because building the frequency Counter is one pass over the tasks, and the scheduling formula itself is O(1) once counts are known; space is O(1) since the Counter is bounded by the fixed number of task types.",
     tests: [{ call: "least_interval(['A','A','A','B','B','B'], 2)", expected: "8" }]
   },
 
@@ -119,6 +129,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def interval_intersection(first_list, second_list):\n    # your code here\n    pass\n",
     solution: "def interval_intersection(first_list, second_list):\n    result = []\n    i, j = 0, 0\n    while i < len(first_list) and j < len(second_list):\n        lo = max(first_list[i][0], second_list[j][0])\n        hi = min(first_list[i][1], second_list[j][1])\n        if lo <= hi:\n            result.append([lo, hi])\n        if first_list[i][1] < second_list[j][1]:\n            i += 1\n        else:\n            j += 1\n    return result\n",
     complexity: "O(m + n) time, O(1) extra space.",
+    whyComplexity: "Time is O(m + n) because the two pointers each only advance forward, together making at most m+n steps total; space is O(1) extra beyond the output.",
     tests: [{ call: "interval_intersection([[0,2],[5,10]], [[1,5],[8,12]])", expected: "[[1, 2], [5, 5], [8, 10]]" }]
   },
 
@@ -131,6 +142,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def my_pow(x, n):\n    # your code here\n    pass\n",
     solution: "def my_pow(x, n):\n    if n < 0:\n        x = 1 / x\n        n = -n\n    result = 1\n    while n:\n        if n & 1:\n            result *= x\n        x *= x\n        n >>= 1\n    return result\n",
     complexity: "O(log n) time, O(1) space.",
+    whyComplexity: "Time is O(log n) because each iteration halves the exponent via a right shift; space is O(1) since only the running result and base are tracked.",
     tests: [{ call: "my_pow(2.0, 10)", expected: "1024.0" }]
   },
   {
@@ -141,6 +153,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def my_sqrt(x):\n    # your code here\n    pass\n",
     solution: "def my_sqrt(x):\n    if x < 2:\n        return x\n    lo, hi = 1, x\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if mid * mid <= x:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return hi\n",
     complexity: "O(log x) time, O(1) space.",
+    whyComplexity: "Time is O(log x) because binary search halves the search range each iteration; space is O(1) for the two boundary pointers.",
     tests: [{ call: "my_sqrt(8)", expected: "2" }, { call: "my_sqrt(4)", expected: "2" }]
   },
   {
@@ -151,6 +164,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def is_happy(n):\n    # your code here\n    pass\n",
     solution: "def is_happy(n):\n    seen = set()\n    while n != 1 and n not in seen:\n        seen.add(n)\n        n = sum(int(d)**2 for d in str(n))\n    return n == 1\n",
     complexity: "O(log n) time per step, bounded number of steps before a cycle or 1 is reached.",
+    whyComplexity: "Time is effectively O(1) because the digit-square-sum sequence for any starting number provably enters a small cycle or reaches 1 within a bounded number of steps, independent of how large n starts; space is O(1) for the same reason — the seen set stays small.",
     tests: [{ call: "is_happy(19)", expected: "True" }, { call: "is_happy(2)", expected: "False" }]
   },
   {
@@ -161,6 +175,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def rotate_array(nums, k):\n    # your code here\n    pass\n",
     solution: "def rotate_array(nums, k):\n    n = len(nums)\n    k %= n\n    nums[:] = (nums[-k:] + nums[:-k]) if k else nums\n    return nums\n",
     complexity: "O(n) time, O(n) space for the rotated copy.",
+    whyComplexity: "Time is O(n) because the slice-and-concatenate touches every element once; space is O(n) for the rotated copy (an O(1)-extra-space version exists using the reverse-three-times trick).",
     tests: [{ call: "rotate_array([1,2,3,4,5,6,7], 3)", expected: "[5, 6, 7, 1, 2, 3, 4]" }]
   },
 
@@ -173,6 +188,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def single_number(nums):\n    # your code here\n    pass\n",
     solution: "def single_number(nums):\n    result = 0\n    for x in nums:\n        result ^= x\n    return result\n",
     complexity: "O(n) time, O(1) space.",
+    whyComplexity: "Time is O(n) because XOR-folding the array is a single pass; space is O(1) since only the running XOR result is tracked.",
     tests: [{ call: "single_number([4,1,2,1,2])", expected: "4" }]
   },
   {
@@ -183,6 +199,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def is_power_of_two(n):\n    # your code here\n    pass\n",
     solution: "def is_power_of_two(n):\n    return n > 0 and (n & (n - 1)) == 0\n",
     complexity: "O(1) time, O(1) space.",
+    whyComplexity: "Time is O(1) because it's a single bitwise AND and comparison, independent of the size of n; space is O(1).",
     tests: [{ call: "is_power_of_two(16)", expected: "True" }, { call: "is_power_of_two(3)", expected: "False" }]
   },
   {
@@ -193,6 +210,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def range_bitwise_and(left, right):\n    # your code here\n    pass\n",
     solution: "def range_bitwise_and(left, right):\n    shift = 0\n    while left != right:\n        left >>= 1\n        right >>= 1\n        shift += 1\n    return left << shift\n",
     complexity: "O(log(right)) time, O(1) space.",
+    whyComplexity: "Time is O(log(right)) because each iteration right-shifts both numbers by one bit, bounded by the bit-width of the input; space is O(1) for the shift counter.",
     tests: [{ call: "range_bitwise_and(5, 7)", expected: "4" }]
   },
 
@@ -205,6 +223,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def combination_sum(candidates, target):\n    # your code here\n    pass\n",
     solution: "def combination_sum(candidates, target):\n    result = []\n    def backtrack(start, path, remaining):\n        if remaining == 0:\n            result.append(path[:])\n            return\n        if remaining < 0:\n            return\n        for i in range(start, len(candidates)):\n            path.append(candidates[i])\n            backtrack(i, path, remaining - candidates[i])\n            path.pop()\n    backtrack(0, [], target)\n    return result\n",
     complexity: "O(2^target) worst case time.",
+    whyComplexity: "Time is O(2^target) worst case because with reuse allowed, the branching factor depends on how many times small candidates can repeat before hitting target; space is O(target / min(candidates)) for recursion depth, plus the output size.",
     tests: [{ call: "combination_sum([2,3,6,7], 7)", expected: "[[2, 2, 3], [7]]" }]
   },
   {
@@ -215,6 +234,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def permute(nums):\n    # your code here\n    pass\n",
     solution: "def permute(nums):\n    result = []\n    def backtrack(path, remaining):\n        if not remaining:\n            result.append(path[:])\n            return\n        for i in range(len(remaining)):\n            path.append(remaining[i])\n            backtrack(path, remaining[:i] + remaining[i+1:])\n            path.pop()\n    backtrack([], nums)\n    return result\n",
     complexity: "O(n! * n) time.",
+    whyComplexity: "Time is O(n! * n) because there are n! permutations and building each one costs O(n) for slicing/copying; space is O(n! * n) to store all of them, plus O(n) recursion depth.",
     tests: [{ call: "len(permute([1,2,3]))", expected: "6" }]
   },
   {
@@ -225,6 +245,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def total_n_queens(n):\n    # your code here\n    pass\n",
     solution: "def total_n_queens(n):\n    count = 0\n    cols, diag1, diag2 = set(), set(), set()\n    def backtrack(row):\n        nonlocal count\n        if row == n:\n            count += 1\n            return\n        for col in range(n):\n            if col in cols or (row - col) in diag1 or (row + col) in diag2:\n                continue\n            cols.add(col); diag1.add(row - col); diag2.add(row + col)\n            backtrack(row + 1)\n            cols.remove(col); diag1.remove(row - col); diag2.remove(row + col)\n    backtrack(0)\n    return count\n",
     complexity: "O(n!) worst case time.",
+    whyComplexity: "Time is O(n!) worst case because column/diagonal pruning cuts the search tree well below the naive n^n placements, but it's still factorial in the worst case; space is O(n) for the tracking sets plus recursion depth.",
     tests: [{ call: "total_n_queens(4)", expected: "2" }]
   },
   {
@@ -235,6 +256,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def word_break_ii(s, word_dict):\n    # your code here\n    pass\n",
     solution: "def word_break_ii(s, word_dict):\n    word_set = set(word_dict)\n    memo = {}\n    def backtrack(start):\n        if start == len(s):\n            return [\"\"]\n        if start in memo:\n            return memo[start]\n        sentences = []\n        for end in range(start + 1, len(s) + 1):\n            word = s[start:end]\n            if word in word_set:\n                for rest in backtrack(end):\n                    sentences.append(word + (\"\" if rest == \"\" else \" \" + rest))\n        memo[start] = sentences\n        return sentences\n    return backtrack(0)\n",
     complexity: "O(2^n) worst case time, memoization prunes it substantially in practice.",
+    whyComplexity: "Time is O(2^n) worst case without memoization, but the memo dict caps each starting index to being solved only once, bounding the practical cost by the number of valid (start, word) matches rather than the full exponential tree; space is O(2^n) worst case for the memoized sentence lists if there are exponentially many valid segmentations.",
     tests: [{ call: "sorted(word_break_ii('catsanddog', ['cat','cats','and','sand','dog']))", expected: "['cat sand dog', 'cats and dog']" }]
   },
 
@@ -247,6 +269,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "import heapq\n\nclass KthLargest:\n    def __init__(self, k, nums):\n        # your code here\n        pass\n\n    def add(self, val):\n        pass\n",
     solution: "import heapq\n\nclass KthLargest:\n    def __init__(self, k, nums):\n        self.k = k\n        self.heap = nums[:]\n        heapq.heapify(self.heap)\n        while len(self.heap) > k:\n            heapq.heappop(self.heap)\n\n    def add(self, val):\n        heapq.heappush(self.heap, val)\n        if len(self.heap) > self.k:\n            heapq.heappop(self.heap)\n        return self.heap[0]\n",
     complexity: "O(log k) time per add, O(k) space.",
+    whyComplexity: "Time is O(log k) per add because each insertion triggers at most one push and one pop on a heap capped at size k; space is O(k) since the heap never grows past that cap.",
     tests: [{ call: "(lambda kl: [kl.add(3), kl.add(5), kl.add(10), kl.add(9), kl.add(4)])(KthLargest(3, [4,5,8,2]))", expected: "[4, 5, 5, 8, 8]" }]
   },
 
@@ -259,6 +282,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "from collections import deque\n\ndef oranges_rotting(grid):\n    # your code here\n    pass\n",
     solution: "from collections import deque\n\ndef oranges_rotting(grid):\n    rows, cols = len(grid), len(grid[0])\n    queue = deque()\n    fresh = 0\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == 2:\n                queue.append((r, c, 0))\n            elif grid[r][c] == 1:\n                fresh += 1\n    minutes = 0\n    while queue:\n        r, c, t = queue.popleft()\n        minutes = max(minutes, t)\n        for dr, dc in ((1,0),(-1,0),(0,1),(0,-1)):\n            nr, nc = r+dr, c+dc\n            if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == 1:\n                grid[nr][nc] = 2\n                fresh -= 1\n                queue.append((nr, nc, t+1))\n    return minutes if fresh == 0 else -1\n",
     complexity: "O(rows * cols) time and space.",
+    whyComplexity: "Time is O(rows * cols) because the multi-source BFS visits each cell at most once; space is O(rows * cols) worst case for the queue if most oranges start rotten.",
     tests: [{ call: "oranges_rotting([[2,1,1],[1,1,0],[0,1,1]])", expected: "4" }]
   },
   {
@@ -269,6 +293,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def trap(height):\n    # your code here\n    pass\n",
     solution: "def trap(height):\n    if not height:\n        return 0\n    left, right = 0, len(height) - 1\n    left_max, right_max = height[left], height[right]\n    water = 0\n    while left < right:\n        if left_max <= right_max:\n            left += 1\n            left_max = max(left_max, height[left])\n            water += left_max - height[left]\n        else:\n            right -= 1\n            right_max = max(right_max, height[right])\n            water += right_max - height[right]\n    return water\n",
     complexity: "O(n) time, O(1) space.",
+    whyComplexity: "Time is O(n) because the two pointers only move inward and never revisit a position; space is O(1) since only a few running max/pointer variables are tracked.",
     tests: [{ call: "trap([0,1,0,2,1,0,1,3,2,1,2,1])", expected: "6" }]
   },
   {
@@ -279,6 +304,7 @@ const FAANG_EXTRA_PROBLEMS = [
     starter: "def merge_sorted_array(nums1, m, nums2, n):\n    # your code here\n    pass\n",
     solution: "def merge_sorted_array(nums1, m, nums2, n):\n    i, j, k = m - 1, n - 1, m + n - 1\n    while j >= 0:\n        if i >= 0 and nums1[i] > nums2[j]:\n            nums1[k] = nums1[i]\n            i -= 1\n        else:\n            nums1[k] = nums2[j]\n            j -= 1\n        k -= 1\n    return nums1\n",
     complexity: "O(m + n) time, O(1) extra space.",
+    whyComplexity: "Time is O(m + n) because filling from the back visits each element of both arrays exactly once; space is O(1) extra since nums1's own trailing space is reused instead of allocating a new array.",
     tests: [{ call: "merge_sorted_array([1,2,3,0,0,0], 3, [2,5,6], 3)", expected: "[1, 2, 2, 3, 5, 6]" }]
   },
 ];

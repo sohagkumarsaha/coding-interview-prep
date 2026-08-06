@@ -2,7 +2,7 @@
 
 **Live at [sohagkumarsaha.github.io/coding-interview-prep](https://sohagkumarsaha.github.io/coding-interview-prep/)**
 
-A self-contained interview lab for the Tesla Optimus Reinforcement Learning Engineer, Policy role: a pattern library (DSA, the complete Blind 75, a FAANG-extended set, RL implementation, system design, a Python Q&A curriculum from Hello World to advanced, and a rapid-fire bank), a live in-browser Python IDE, and a timed mock-interview mode.
+A self-contained interview lab for the Tesla Optimus Reinforcement Learning Engineer, Policy role: a pattern library (DSA, the complete Blind 75, NeetCode 150 gap-fill, an 8-week Grind 75 study plan, RL implementation, system design, a Python Q&A curriculum from Hello World to advanced, and a rapid-fire bank), a live in-browser Python IDE with syntax highlighting, and a timed mock-interview mode.
 
 Everything runs client-side. Python execution is powered by [Pyodide](https://pyodide.org) (real CPython compiled to WebAssembly) — there is no backend, no login, and no data ever leaves the browser. Progress and mock-interview history are stored in `localStorage` on your own machine.
 
@@ -66,23 +66,25 @@ Any modern browser (WebAssembly support required — anything from the last seve
 ```
 coding-interview-prep/
 ├── index.html          Landing page
-├── learn.html           Reference library (DSA / Blind 75 / FAANG Extended / Python Mastery / RL / system design / Q&A)
-├── practice.html        Problem browser + live Python IDE
+├── learn.html           Reference library (DSA / Blind 75 / NeetCode 150 / Grind 75 Plan / Python Mastery / RL / system design / Q&A)
+├── practice.html        Problem browser + live, syntax-highlighted Python IDE
 ├── mock.html             Timed mock-interview mode + session history
 ├── css/
-│   └── styles.css        Design system (light + dark theme tokens)
+│   └── styles.css        Design system (light + dark theme tokens, Prism.js token colors)
 ├── js/
 │   ├── theme.js           Day/night mode toggle, persisted in localStorage
 │   ├── editor.js           CodeMirror wrapper with a plain-textarea fallback
 │   ├── pyodide-runner.js    Runs Python + evaluates test assertions via Pyodide
-│   ├── main.js              Shared helpers (copy-to-clipboard, escaping)
-│   ├── learn.js              Renders the Learn page accordions
+│   ├── main.js              Shared helpers (copy-to-clipboard, escaping, Prism highlighting trigger)
+│   ├── learn.js              Renders the Learn page accordions + study plan
 │   ├── practice.js            Practice page logic
 │   └── mock.js                 Mock interview flow, timer, history
 └── data/
-    ├── dsa.js             22 curated DSA problems: prompt, approach, solution, tests
+    ├── dsa.js             22 curated DSA problems: prompt, technique, approach, solution, justified complexity, tests
     ├── blind75.js           All 75 Blind 75 problems, by category, original write-ups
     ├── faang_extra.js         26 problems covering Advanced Graphs, 2D DP, Greedy, Math & Geometry, Bit Manipulation, and FAANG staples Blind 75 skips
+    ├── neetcode_extra.js       24 more NeetCode 150 gap-fill problems: Stack, Binary Search, more Linked List/Trees/Heap/Backtracking/Graphs, both DP tiers
+    ├── grind75_plan.js         8-week study schedule referencing the problem bank above by id, with time estimates
     ├── python_mastery.js       107 Python Q&A items (66 main + 41 follow-ups) across 9 tiers, Hello World to Google-level
     ├── rl.js               10 RL implementation problems
     ├── sysdesign.js         14 system design problems (RL/robotics-specific + classic FAANG staples)
@@ -91,7 +93,7 @@ coding-interview-prep/
 
 ## Adding or editing problems
 
-Each entry in `data/dsa.js` / `data/blind75.js` / `data/rl.js` is a plain JS object. Blind 75 entries use a `category` field (Array, Binary, Dynamic Programming, Graph, Interval, Linked List, Matrix, String, Tree, Heap — the list's own standard categories) instead of `pattern`, but are otherwise identical in shape:
+Each entry in `data/dsa.js` / `data/blind75.js` / `data/faang_extra.js` / `data/neetcode_extra.js` / `data/rl.js` is a plain JS object. Blind 75 / FAANG Extended / NeetCode Extra entries use a `category` field instead of `pattern`, but are otherwise identical in shape:
 
 ```js
 {
@@ -104,11 +106,14 @@ Each entry in `data/dsa.js` / `data/blind75.js` / `data/rl.js` is a plain JS obj
   starter: "def solve():\n    pass\n",
   solution: "def solve():\n    return 42\n",
   complexity: "O(...) time, O(...) space.",
+  whyComplexity: "The justification: why that time bound holds, why that space bound holds — not just the Big-O restated.",
   tests: [ { call: "solve()", expected: "42" } ]
 }
 ```
 
 `tests[].expected` is compared against Python's `repr()` of whatever `call` evaluates to, so format expected values the way Python would print them (`'True'`, `'[0, 1]'`, `"{'a': 1}"`, and so on). RL problems that require PyTorch should be marked `torch: true` — the Practice and Mock Interview pages disable live execution for those (PyTorch isn't available in the in-browser runtime) and route straight to the reference solution instead.
+
+Code blocks (reference solutions, Python Mastery examples) render through Prism.js for syntax highlighting — `renderCodeBlock()` in `js/main.js` wraps code in `<code class="language-python">`, and `highlightCode(container)` must be called after inserting it into the DOM (already wired into learn.js/practice.js/mock.js; call it again if you add a new insertion point).
 
 ## Notes on the Python runtime
 
@@ -118,9 +123,13 @@ Pyodide ships the standard library plus NumPy; it does **not** include PyTorch. 
 
 `data/blind75.js` covers the full Blind 75 — the curated list originated by Yangshun Tay (see [techinterviewhandbook.org/grind75](https://www.techinterviewhandbook.org/grind75) for the author's newer, customizable successor, Grind 75). The category breakdown (Array 10, Binary 5, Dynamic Programming 11, Graph 8, Interval 5, Linked List 6, Matrix 4, String 10, Tree 14, Heap 2 net-new) matches the original list; every prompt, approach explanation, and solution here is written from scratch for this site rather than copied from LeetCode. All 75 solutions were validated end to end against real Python before shipping.
 
-## About the FAANG Extended set
+## About the NeetCode 150 tab (FAANG Extended + NeetCode Extra)
 
-`data/faang_extra.js` fills in the highest-value gaps Blind 75 leaves open — the categories NeetCode 150 adds beyond it: Advanced Graphs (Dijkstra/Bellman-Ford variants), 2D Dynamic Programming, Greedy, Math & Geometry, deeper Bit Manipulation and Backtracking — plus a few universally-cited FAANG staples (Trapping Rain Water, Rotting Oranges, Merge Sorted Array). 26 problems, all validated the same way as Blind 75.
+The "NeetCode 150" tab combines `data/faang_extra.js` (26 problems) and `data/neetcode_extra.js` (24 problems) — 50 problems total, filling the highest-value gaps Blind 75 leaves open: Advanced Graphs, 2D Dynamic Programming, Greedy, Math & Geometry, deeper Bit Manipulation and Backtracking, Stack, Binary Search, and more Linked List/Trees/Heap coverage. This isn't a literal clone of all 150 NeetCode problems — it's the delta that matters most on top of what Blind 75 already covers.
+
+## About the Grind 75 Study Plan
+
+Grind 75 and Blind 75 overlap on the large majority of their problems — Grind 75's real value-add is prioritization and pacing, not a materially different problem set. Rather than a third near-duplicate copy of the same ~70 problems, `data/grind75_plan.js` is an 8-week, difficulty-ordered schedule built entirely over problems already in this site (mostly Blind 75, with some DSA/NeetCode-tab picks), each with a time estimate. It's rendered as the last tab on the Learn page, checks off automatically as you solve problems in Practice (both read the same `localStorage` progress key), and each item links straight to that problem in Practice mode.
 
 ## About the Python Mastery tab
 

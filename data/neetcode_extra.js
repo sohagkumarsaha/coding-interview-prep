@@ -1,0 +1,270 @@
+// NeetCode 150 Extended (Round 2) — fills the remaining highest-value gaps
+// after Blind 75 + FAANG Extended: Stack, Binary Search, more Linked List,
+// more Trees, Heap, more Backtracking, more Graphs, and both DP categories.
+// Same original-content policy as the rest of this site.
+const NEETCODE_EXTRA_PROBLEMS = [
+  {
+    id: "nc-01", title: "Min Stack", category: "Stack",
+    prompt: "Design a stack that supports push, pop, top, and retrieving the minimum element, all in O(1) time.",
+    example: "push(-2); push(0); push(-3); get_min() -> -3; pop(); top() -> 0; get_min() -> -2",
+    approach: "A second stack tracks the running minimum alongside the main stack — each position in min_stack holds the minimum of everything pushed so far up to that point, so popping either stack in lockstep keeps both correct.",
+    starter: "class MinStack:\n    def __init__(self):\n        # your code here\n        pass\n\n    def push(self, val):\n        pass\n\n    def pop(self):\n        pass\n\n    def top(self):\n        pass\n\n    def get_min(self):\n        pass\n",
+    solution: "class MinStack:\n    def __init__(self):\n        self.stack = []\n        self.min_stack = []\n\n    def push(self, val):\n        self.stack.append(val)\n        m = val if not self.min_stack else min(val, self.min_stack[-1])\n        self.min_stack.append(m)\n\n    def pop(self):\n        self.stack.pop()\n        self.min_stack.pop()\n\n    def top(self):\n        return self.stack[-1]\n\n    def get_min(self):\n        return self.min_stack[-1]\n",
+    complexity: "O(1) time per operation, O(n) space.",
+    whyComplexity: "Time is O(1) per operation because push/pop/top/get_min each touch only the top of one or both stacks; space is O(n) since both stacks grow with the number of pushed elements.",
+    tests: [{ call: "(lambda s: (s.push(-2), s.push(0), s.push(-3), s.get_min(), s.pop(), s.top(), s.get_min())[3])(MinStack())", expected: "-3" }]
+  },
+  {
+    id: "nc-02", title: "Evaluate Reverse Polish Notation", category: "Stack",
+    prompt: "Evaluate an arithmetic expression given in Reverse Polish (postfix) Notation.",
+    example: "Input: tokens = [\"2\",\"1\",\"+\",\"3\",\"*\"]\nOutput: 9",
+    approach: "A stack holds operands; whenever an operator is seen, pop the two most recent operands, apply it, and push the result back.",
+    starter: "def eval_rpn(tokens):\n    # your code here\n    pass\n",
+    solution: "def eval_rpn(tokens):\n    stack = []\n    for t in tokens:\n        if t in ('+', '-', '*', '/'):\n            b = stack.pop()\n            a = stack.pop()\n            if t == '+':\n                stack.append(a + b)\n            elif t == '-':\n                stack.append(a - b)\n            elif t == '*':\n                stack.append(a * b)\n            else:\n                stack.append(int(a / b))\n        else:\n            stack.append(int(t))\n    return stack[0]\n",
+    complexity: "O(n) time, O(n) space.",
+    whyComplexity: "Time is O(n) because each token is processed once, with each operator popping exactly two values; space is O(n) worst case for the operand stack.",
+    tests: [{ call: "eval_rpn(['2','1','+','3','*'])", expected: "9" }]
+  },
+  {
+    id: "nc-03", title: "Generate Parentheses", category: "Stack",
+    prompt: "Given n pairs of parentheses, generate all combinations of well-formed parentheses.",
+    example: "Input: n = 3\nOutput: 5 valid combinations",
+    approach: "Backtracking that only adds '(' while under the limit n, and only adds ')' while there are more open than close so far — this constraint alone guarantees every generated string is well-formed.",
+    starter: "def generate_parenthesis(n):\n    # your code here\n    pass\n",
+    solution: "def generate_parenthesis(n):\n    result = []\n    def backtrack(path, open_count, close_count):\n        if len(path) == 2 * n:\n            result.append(''.join(path))\n            return\n        if open_count < n:\n            path.append('(')\n            backtrack(path, open_count + 1, close_count)\n            path.pop()\n        if close_count < open_count:\n            path.append(')')\n            backtrack(path, open_count, close_count + 1)\n            path.pop()\n    backtrack([], 0, 0)\n    return result\n",
+    complexity: "O(4^n / sqrt(n)) time (the nth Catalan number), O(n) recursion depth.",
+    whyComplexity: "Time is O(4^n / sqrt(n)) because that's exactly how many valid sequences exist (the nth Catalan number) and each is built in O(n); space is O(n) recursion depth plus the output.",
+    tests: [{ call: "len(generate_parenthesis(3))", expected: "5" }]
+  },
+  {
+    id: "nc-04", title: "Daily Temperatures", category: "Stack",
+    prompt: "Given daily temperatures, return an array where each position holds the number of days until a warmer temperature, or 0 if none exists.",
+    example: "Input: temperatures = [73,74,75,71,69,72,76,73]\nOutput: [1,1,4,2,1,1,0,0]",
+    approach: "A monotonic decreasing stack of indices: when the current temperature beats the temperature at the top of the stack, that's the 'warmer day' for that index, so pop it and record the day gap.",
+    starter: "def daily_temperatures(temperatures):\n    # your code here\n    pass\n",
+    solution: "def daily_temperatures(temperatures):\n    n = len(temperatures)\n    result = [0] * n\n    stack = []\n    for i, t in enumerate(temperatures):\n        while stack and temperatures[stack[-1]] < t:\n            j = stack.pop()\n            result[j] = i - j\n        stack.append(i)\n    return result\n",
+    complexity: "O(n) time, O(n) space.",
+    whyComplexity: "Time is O(n) because although there's a nested while loop, each index is pushed onto and popped off the stack at most once across the whole run; space is O(n) worst case if temperatures are strictly decreasing, leaving every index on the stack.",
+    tests: [{ call: "daily_temperatures([73,74,75,71,69,72,76,73])", expected: "[1, 1, 4, 2, 1, 1, 0, 0]" }]
+  },
+  {
+    id: "nc-05", title: "Car Fleet", category: "Stack",
+    prompt: "Cars travel toward the same target at different positions and speeds on a one-lane road; a car can't pass another. Count how many fleets arrive at the target.",
+    example: "Input: target = 12, position = [10,8,0,5,3], speed = [2,4,1,1,3]\nOutput: 3",
+    approach: "Sort cars by starting position, closest to target first. Walking from closest to farthest, a car that would arrive later than the fleet ahead of it merges into that fleet instead of forming a new one.",
+    starter: "def car_fleet(target, position, speed):\n    # your code here\n    pass\n",
+    solution: "def car_fleet(target, position, speed):\n    pairs = sorted(zip(position, speed), reverse=True)\n    fleets = 0\n    curr_time = 0\n    for pos, spd in pairs:\n        time = (target - pos) / spd\n        if time > curr_time:\n            fleets += 1\n            curr_time = time\n    return fleets\n",
+    complexity: "O(n log n) time, O(n) space.",
+    whyComplexity: "Time is O(n log n) dominated by sorting cars by position; the single pass afterward is O(n). Space is O(n) for the sorted pairs.",
+    tests: [{ call: "car_fleet(12, [10,8,0,5,3], [2,4,1,1,3])", expected: "3" }]
+  },
+  {
+    id: "nc-06", title: "Binary Search", category: "Binary Search",
+    prompt: "Given a sorted array and a target, return its index, or -1 if not present.",
+    example: "Input: nums = [-1,0,3,5,9,12], target = 9\nOutput: 4",
+    approach: "The textbook binary search: compare the midpoint to the target and discard the half that can't contain it.",
+    starter: "def binary_search(nums, target):\n    # your code here\n    pass\n",
+    solution: "def binary_search(nums, target):\n    lo, hi = 0, len(nums) - 1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if nums[mid] == target:\n            return mid\n        elif nums[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return -1\n",
+    complexity: "O(log n) time, O(1) space.",
+    whyComplexity: "Time is O(log n) because each comparison halves the remaining search space; space is O(1) for the two boundary pointers.",
+    tests: [{ call: "binary_search([-1,0,3,5,9,12], 9)", expected: "4" }]
+  },
+  {
+    id: "nc-07", title: "Search a 2D Matrix", category: "Binary Search",
+    prompt: "Given an m x n matrix where each row is sorted and the first element of each row is greater than the last element of the previous row, determine whether a target exists, in O(log(m*n)) time.",
+    example: "Input: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3\nOutput: True",
+    approach: "Treat the matrix as one flattened sorted array and binary search it directly, converting the flat index back to (row, col) with divmod.",
+    starter: "def search_matrix(matrix, target):\n    # your code here\n    pass\n",
+    solution: "def search_matrix(matrix, target):\n    rows, cols = len(matrix), len(matrix[0])\n    lo, hi = 0, rows * cols - 1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        r, c = divmod(mid, cols)\n        val = matrix[r][c]\n        if val == target:\n            return True\n        elif val < target:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return False\n",
+    complexity: "O(log(rows * cols)) time, O(1) space.",
+    whyComplexity: "Time is O(log(rows * cols)) because the matrix is treated as one flattened sorted array and binary-searched directly; space is O(1).",
+    tests: [{ call: "search_matrix([[1,3,5,7],[10,11,16,20],[23,30,34,60]], 3)", expected: "True" }]
+  },
+  {
+    id: "nc-08", title: "Koko Eating Bananas", category: "Binary Search",
+    prompt: "Given piles of bananas and h hours, find the minimum integer eating speed so Koko can finish all piles within h hours (one pile per hour at most, ceiling division per pile).",
+    example: "Input: piles = [3,6,7,11], h = 8\nOutput: 4",
+    approach: "Binary search on the answer (the eating speed itself): feasibility — can all piles be finished within h hours at a given speed — is monotonic, so binary search finds the minimum feasible speed.",
+    starter: "import math\n\ndef min_eating_speed(piles, h):\n    # your code here\n    pass\n",
+    solution: "import math\n\ndef min_eating_speed(piles, h):\n    lo, hi = 1, max(piles)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        hours = sum(math.ceil(p / mid) for p in piles)\n        if hours <= h:\n            hi = mid\n        else:\n            lo = mid + 1\n    return lo\n",
+    complexity: "O(n log m) time for m = max pile, O(1) space.",
+    whyComplexity: "Time is O(n log m) where m is the largest pile, because binary search over possible speeds takes O(log m) iterations and each checks feasibility in O(n); space is O(1).",
+    tests: [{ call: "min_eating_speed([3,6,7,11], 8)", expected: "4" }]
+  },
+  {
+    id: "nc-09", title: "Copy List with Random Pointer", category: "Linked List",
+    prompt: "Given a linked list where each node has an extra random pointer that can point to any node in the list or None, create a deep copy of it.",
+    example: "Each node has .val, .next, .random.",
+    approach: "Two passes with a hash map from original node to its clone: the first pass creates all clones (values only), the second pass wires each clone's next and random pointers by looking up the originals' targets in the map.",
+    starter: "class Node:\n    def __init__(self, x, next=None, random=None):\n        self.val = x\n        self.next = next\n        self.random = random\n\ndef copy_random_list(head):\n    # your code here\n    pass\n",
+    solution: "class Node:\n    def __init__(self, x, next=None, random=None):\n        self.val = x\n        self.next = next\n        self.random = random\n\ndef copy_random_list(head):\n    if not head:\n        return None\n    old_to_new = {}\n    node = head\n    while node:\n        old_to_new[node] = Node(node.val)\n        node = node.next\n    node = head\n    while node:\n        old_to_new[node].next = old_to_new.get(node.next)\n        old_to_new[node].random = old_to_new.get(node.random)\n        node = node.next\n    return old_to_new[head]\n\ndef to_vals(head):\n    out = []\n    while head:\n        out.append(head.val)\n        head = head.next\n    return out\n",
+    complexity: "O(n) time, O(n) space.",
+    whyComplexity: "Time is O(n) because building the old-to-new map and then wiring next/random pointers are each a single linear pass; space is O(n) for the map.",
+    tests: [{ call: "to_vals(copy_random_list((lambda a, b: (setattr(a,'next',b), setattr(a,'random',b), setattr(b,'random',b), a)[3])(Node(1), Node(2))))", expected: "[1, 2]" }]
+  },
+  {
+    id: "nc-10", title: "Add Two Numbers", category: "Linked List",
+    prompt: "Given two numbers represented as linked lists of digits in reverse order, add them and return the sum as a linked list in the same format.",
+    example: "Input: l1 = [2,4,3], l2 = [5,6,4]  (342 + 465)\nOutput: [7,0,8]  (807)",
+    approach: "Simulate grade-school addition digit by digit, carrying the overflow into the next position, until both lists and the carry are exhausted.",
+    starter: "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val, self.next = val, next\n\ndef add_two_numbers(l1, l2):\n    # your code here\n    pass\n",
+    solution: "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val, self.next = val, next\n\ndef add_two_numbers(l1, l2):\n    dummy = ListNode()\n    curr = dummy\n    carry = 0\n    while l1 or l2 or carry:\n        v1 = l1.val if l1 else 0\n        v2 = l2.val if l2 else 0\n        total = v1 + v2 + carry\n        carry = total // 10\n        curr.next = ListNode(total % 10)\n        curr = curr.next\n        l1 = l1.next if l1 else None\n        l2 = l2.next if l2 else None\n    return dummy.next\n\ndef to_list(head):\n    out = []\n    while head:\n        out.append(head.val)\n        head = head.next\n    return out\n\ndef from_list(vals):\n    head = None\n    for v in reversed(vals):\n        head = ListNode(v, head)\n    return head\n",
+    complexity: "O(max(m, n)) time, O(max(m, n)) space.",
+    whyComplexity: "Time is O(max(m, n)) because the traversal runs once per digit position across both lists; space is O(max(m, n)) for the newly built result list.",
+    tests: [{ call: "to_list(add_two_numbers(from_list([2,4,3]), from_list([5,6,4])))", expected: "[7, 0, 8]" }]
+  },
+  {
+    id: "nc-11", title: "Diameter of Binary Tree", category: "Trees",
+    prompt: "Given a binary tree, find the length (in edges) of the longest path between any two nodes, which may or may not pass through the root.",
+    example: "Input: root = [1,2,3,4,5]\nOutput: 3   (path 4-2-1-3 or 5-2-1-3)",
+    approach: "Post-order recursion: at every node, the best path through it is the sum of its left and right subtree heights; track a running global best while still returning each subtree's height to its parent.",
+    starter: "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val, self.left, self.right = val, left, right\n\ndef diameter_of_binary_tree(root):\n    # your code here\n    pass\n",
+    solution: "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val, self.left, self.right = val, left, right\n\ndef diameter_of_binary_tree(root):\n    best = [0]\n    def depth(node):\n        if not node:\n            return 0\n        l = depth(node.left)\n        r = depth(node.right)\n        best[0] = max(best[0], l + r)\n        return 1 + max(l, r)\n    depth(root)\n    return best[0]\n",
+    complexity: "O(n) time, O(h) space.",
+    whyComplexity: "Time is O(n) because the post-order recursion visits and returns from every node exactly once; space is O(h) for the recursion stack.",
+    tests: [{ call: "diameter_of_binary_tree(TreeNode(1, TreeNode(2, TreeNode(4), TreeNode(5)), TreeNode(3)))", expected: "3" }]
+  },
+  {
+    id: "nc-12", title: "Balanced Binary Tree", category: "Trees",
+    prompt: "Determine whether a binary tree is height-balanced (the left and right subtree heights of every node differ by at most 1).",
+    example: "Input: root = [3,9,20,null,null,15,7]\nOutput: True",
+    approach: "Compute height bottom-up, short-circuiting to a sentinel value (-1) the instant any subtree is found unbalanced, so an imbalance deep in the tree doesn't require a separate second pass to detect.",
+    starter: "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val, self.left, self.right = val, left, right\n\ndef is_balanced(root):\n    # your code here\n    pass\n",
+    solution: "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val, self.left, self.right = val, left, right\n\ndef is_balanced(root):\n    def height(node):\n        if not node:\n            return 0\n        lh = height(node.left)\n        if lh == -1:\n            return -1\n        rh = height(node.right)\n        if rh == -1:\n            return -1\n        if abs(lh - rh) > 1:\n            return -1\n        return 1 + max(lh, rh)\n    return height(root) != -1\n",
+    complexity: "O(n) time, O(h) space.",
+    whyComplexity: "Time is O(n) because each node's height is computed once, bottom-up, rather than recomputed for every ancestor; space is O(h) for the recursion stack.",
+    tests: [{ call: "is_balanced(TreeNode(3, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7))))", expected: "True" }]
+  },
+  {
+    id: "nc-13", title: "Binary Tree Right Side View", category: "Trees",
+    prompt: "Given a binary tree, return the values visible from the right side, ordered top to bottom (the last node at each level).",
+    example: "Input: root = [1,2,3,null,5,null,4]\nOutput: [1,3,4]",
+    approach: "Level-order BFS, recording only the last node processed at each level, since that's exactly the one visible looking from the right.",
+    starter: "from collections import deque\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val, self.left, self.right = val, left, right\n\ndef right_side_view(root):\n    # your code here\n    pass\n",
+    solution: "from collections import deque\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val, self.left, self.right = val, left, right\n\ndef right_side_view(root):\n    if not root:\n        return []\n    result = []\n    queue = deque([root])\n    while queue:\n        level_size = len(queue)\n        for i in range(level_size):\n            node = queue.popleft()\n            if i == level_size - 1:\n                result.append(node.val)\n            if node.left:\n                queue.append(node.left)\n            if node.right:\n                queue.append(node.right)\n    return result\n",
+    complexity: "O(n) time, O(n) space.",
+    whyComplexity: "Time is O(n) because standard level-order BFS visits every node exactly once; space is O(n) worst case for the widest level sitting in the queue.",
+    tests: [{ call: "right_side_view(TreeNode(1, TreeNode(2, None, TreeNode(5)), TreeNode(3, None, TreeNode(4))))", expected: "[1, 3, 4]" }]
+  },
+  {
+    id: "nc-14", title: "K Closest Points to Origin", category: "Heap",
+    prompt: "Given a list of points on a 2D plane, return the k points closest to the origin.",
+    example: "Input: points = [[1,3],[-2,2]], k = 1\nOutput: [[-2, 2]]",
+    approach: "heapq.nsmallest over squared Euclidean distance (skipping the unnecessary sqrt, since it doesn't change the ordering) maintains only the k best candidates instead of sorting every point.",
+    starter: "import heapq\n\ndef k_closest(points, k):\n    # your code here\n    pass\n",
+    solution: "import heapq\n\ndef k_closest(points, k):\n    return [[x, y] for _, x, y in heapq.nsmallest(k, ((x*x + y*y, x, y) for x, y in points))]\n",
+    complexity: "O(n log k) time, O(k) space.",
+    whyComplexity: "Time is O(n log k) because heapq.nsmallest maintains a heap of size k across all n points; space is O(k) for that heap.",
+    tests: [{ call: "k_closest([[1,3],[-2,2]], 1)", expected: "[[-2, 2]]" }]
+  },
+  {
+    id: "nc-15", title: "Last Stone Weight", category: "Heap",
+    prompt: "You have stones with given weights. Repeatedly smash the two heaviest together (if equal, both vanish; otherwise the difference remains) until at most one stone is left. Return its weight, or 0.",
+    example: "Input: stones = [2,7,4,1,8,1]\nOutput: 1",
+    approach: "A max-heap (via negation, since heapq is min-heap only) always gives the two heaviest stones in O(log n) each.",
+    starter: "import heapq\n\ndef last_stone_weight(stones):\n    # your code here\n    pass\n",
+    solution: "import heapq\n\ndef last_stone_weight(stones):\n    heap = [-s for s in stones]\n    heapq.heapify(heap)\n    while len(heap) > 1:\n        first = -heapq.heappop(heap)\n        second = -heapq.heappop(heap)\n        if first != second:\n            heapq.heappush(heap, -(first - second))\n    return -heap[0] if heap else 0\n",
+    complexity: "O(n log n) time, O(n) space.",
+    whyComplexity: "Time is O(n log n) because each of up to n smash operations does two O(log n) heap pops and at most one O(log n) push; space is O(n) for the heap.",
+    tests: [{ call: "last_stone_weight([2,7,4,1,8,1])", expected: "1" }]
+  },
+  {
+    id: "nc-16", title: "Subsets II", category: "Backtracking",
+    prompt: "Given an array that may contain duplicates, return all possible unique subsets.",
+    example: "Input: nums = [1,2,2]\nOutput: 6 unique subsets",
+    approach: "Same backtracking as Subsets, but sort first and skip a candidate if it equals the previous one at the same recursion depth — that's what prevents duplicate subsets without needing to dedupe the output afterward.",
+    starter: "def subsets_with_dup(nums):\n    # your code here\n    pass\n",
+    solution: "def subsets_with_dup(nums):\n    nums = sorted(nums)\n    result = []\n    def backtrack(start, path):\n        result.append(path[:])\n        for i in range(start, len(nums)):\n            if i > start and nums[i] == nums[i - 1]:\n                continue\n            path.append(nums[i])\n            backtrack(i + 1, path)\n            path.pop()\n    backtrack(0, [])\n    return result\n",
+    complexity: "O(2^n) time, O(2^n) space.",
+    whyComplexity: "Time is O(2^n) because that's the total number of subsets generated in the worst case, with the duplicate-skipping check adding only O(1) per candidate; space is O(2^n) for the output plus O(n) recursion depth.",
+    tests: [{ call: "len(subsets_with_dup([1,2,2]))", expected: "6" }]
+  },
+  {
+    id: "nc-17", title: "Combination Sum II", category: "Backtracking",
+    prompt: "Given candidates that may contain duplicates and a target, return all unique combinations that sum to target, using each number at most once (per its position in the array).",
+    example: "Input: candidates = [10,1,2,7,6,1,5], target = 8\nOutput: [[1,1,6],[1,2,5],[1,7],[2,6]]",
+    approach: "Sort first, then backtrack advancing the start index by one each time (no reuse, unlike Combination Sum), skipping a candidate equal to the previous one at the same depth to avoid duplicate combinations.",
+    starter: "def combination_sum2(candidates, target):\n    # your code here\n    pass\n",
+    solution: "def combination_sum2(candidates, target):\n    candidates = sorted(candidates)\n    result = []\n    def backtrack(start, path, remaining):\n        if remaining == 0:\n            result.append(path[:])\n            return\n        if remaining < 0:\n            return\n        for i in range(start, len(candidates)):\n            if i > start and candidates[i] == candidates[i - 1]:\n                continue\n            path.append(candidates[i])\n            backtrack(i + 1, path, remaining - candidates[i])\n            path.pop()\n    backtrack(0, [], target)\n    return result\n",
+    complexity: "O(2^n) worst-case time, O(n) recursion depth.",
+    whyComplexity: "Time is O(2^n) worst case for the subset-style search space, though the sorted-duplicate-skip prunes it substantially in practice; space is O(n) recursion depth plus the output size.",
+    tests: [{ call: "combination_sum2([10,1,2,7,6,1,5], 8)", expected: "[[1, 1, 6], [1, 2, 5], [1, 7], [2, 6]]" }]
+  },
+  {
+    id: "nc-18", title: "Palindrome Partitioning", category: "Backtracking",
+    prompt: "Given a string, partition it so every substring is a palindrome, and return all possible partitionings.",
+    example: "Input: s = \"aab\"\nOutput: [[\"a\",\"a\",\"b\"],[\"aa\",\"b\"]]",
+    approach: "Backtracking: at each starting position, try every possible end position, only recursing further when the substring formed is itself a palindrome.",
+    starter: "def partition(s):\n    # your code here\n    pass\n",
+    solution: "def partition(s):\n    result = []\n    def is_pal(sub):\n        return sub == sub[::-1]\n    def backtrack(start, path):\n        if start == len(s):\n            result.append(path[:])\n            return\n        for end in range(start + 1, len(s) + 1):\n            sub = s[start:end]\n            if is_pal(sub):\n                path.append(sub)\n                backtrack(end, path)\n                path.pop()\n    backtrack(0, [])\n    return result\n",
+    complexity: "O(n * 2^n) time, O(n) recursion depth.",
+    whyComplexity: "Time is O(n * 2^n) because there are up to 2^n ways to partition the string and each palindrome check costs up to O(n); space is O(n) recursion depth plus the output.",
+    tests: [{ call: "partition('aab')", expected: "[['a', 'a', 'b'], ['aa', 'b']]" }]
+  },
+  {
+    id: "nc-19", title: "Letter Combinations of a Phone Number", category: "Backtracking",
+    prompt: "Given a string of digits 2-9, return all possible letter combinations the number could represent, using a standard phone keypad mapping.",
+    example: "Input: digits = \"23\"\nOutput: [\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]",
+    approach: "Backtracking over digit positions, branching into every letter the current digit maps to at each step.",
+    starter: "def letter_combinations(digits):\n    # your code here\n    pass\n",
+    solution: "def letter_combinations(digits):\n    if not digits:\n        return []\n    mapping = {'2':'abc','3':'def','4':'ghi','5':'jkl','6':'mno','7':'pqrs','8':'tuv','9':'wxyz'}\n    result = []\n    def backtrack(index, path):\n        if index == len(digits):\n            result.append(''.join(path))\n            return\n        for c in mapping[digits[index]]:\n            path.append(c)\n            backtrack(index + 1, path)\n            path.pop()\n    backtrack(0, [])\n    return result\n",
+    complexity: "O(4^n * n) time, O(n) recursion depth.",
+    whyComplexity: "Time is O(4^n * n) because each of up to 4 letters per digit branches the recursion, and building each length-n string costs O(n); space is O(n) recursion depth plus the output.",
+    tests: [{ call: "sorted(letter_combinations('23'))", expected: "['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']" }]
+  },
+  {
+    id: "nc-20", title: "Max Area of Island", category: "Graphs",
+    prompt: "Given a binary grid, find the area of the largest connected island of 1s (4-directional connectivity).",
+    example: "Input: grid = [[1,1,0],[0,1,0],[0,0,1]]\nOutput: 3",
+    approach: "DFS flood-fill from every unvisited land cell, counting cells as it goes and zeroing them out to mark them visited; track the maximum area seen across all islands.",
+    starter: "def max_area_of_island(grid):\n    # your code here\n    pass\n",
+    solution: "def max_area_of_island(grid):\n    rows, cols = len(grid), len(grid[0])\n    def dfs(r, c):\n        if r < 0 or r >= rows or c < 0 or c >= cols or grid[r][c] != 1:\n            return 0\n        grid[r][c] = 0\n        return 1 + dfs(r+1, c) + dfs(r-1, c) + dfs(r, c+1) + dfs(r, c-1)\n    best = 0\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == 1:\n                best = max(best, dfs(r, c))\n    return best\n",
+    complexity: "O(rows * cols) time, O(rows * cols) space.",
+    whyComplexity: "Time is O(rows * cols) because the DFS visits each land cell at most once thanks to in-place zeroing; space is O(rows * cols) worst case recursion depth if the whole grid is one island.",
+    tests: [{ call: "max_area_of_island([[1,1,0],[0,1,0],[0,0,1]])", expected: "3" }]
+  },
+  {
+    id: "nc-21", title: "Course Schedule II", category: "Graphs",
+    prompt: "Given prerequisites, return a valid order to take all courses, or an empty array if it's impossible.",
+    example: "Input: numCourses = 2, prerequisites = [[1,0]]\nOutput: [0, 1]",
+    approach: "The same Kahn's-algorithm topological sort as Course Schedule, except the visitation order itself — rather than just whether all nodes get visited — is the answer.",
+    starter: "from collections import deque, defaultdict\n\ndef find_order(num_courses, prerequisites):\n    # your code here\n    pass\n",
+    solution: "from collections import deque, defaultdict\n\ndef find_order(num_courses, prerequisites):\n    graph = defaultdict(list)\n    in_degree = [0] * num_courses\n    for course, prereq in prerequisites:\n        graph[prereq].append(course)\n        in_degree[course] += 1\n    queue = deque([c for c in range(num_courses) if in_degree[c] == 0])\n    order = []\n    while queue:\n        node = queue.popleft()\n        order.append(node)\n        for nxt in graph[node]:\n            in_degree[nxt] -= 1\n            if in_degree[nxt] == 0:\n                queue.append(nxt)\n    return order if len(order) == num_courses else []\n",
+    complexity: "O(V + E) time, O(V + E) space.",
+    whyComplexity: "Time is O(V + E) because Kahn's algorithm processes each vertex once and each edge once; space is O(V + E) for the adjacency list, in-degree array, and queue.",
+    tests: [{ call: "find_order(2, [[1,0]])", expected: "[0, 1]" }]
+  },
+  {
+    id: "nc-22", title: "Min Cost Climbing Stairs", category: "1-D Dynamic Programming",
+    prompt: "Given a cost array where cost[i] is the cost of stepping on stair i, and you can start at step 0 or 1 and climb 1 or 2 steps at a time, find the minimum cost to reach the top.",
+    example: "Input: cost = [10,15,20]\nOutput: 15",
+    approach: "DP where each step's minimum cost is its own cost plus the cheaper of the two steps that could reach it — a direct extension of the Climbing Stairs recurrence with weighted steps.",
+    starter: "def min_cost_climbing_stairs(cost):\n    # your code here\n    pass\n",
+    solution: "def min_cost_climbing_stairs(cost):\n    n = len(cost)\n    dp = [0] * (n + 1)\n    for i in range(2, n + 1):\n        dp[i] = min(dp[i-1] + cost[i-1], dp[i-2] + cost[i-2])\n    return dp[n]\n",
+    complexity: "O(n) time, O(n) space.",
+    whyComplexity: "Time is O(n) because each step's cost is computed once from the two steps before it; space is O(n) for the DP array (reducible to O(1)).",
+    tests: [{ call: "min_cost_climbing_stairs([10,15,20])", expected: "15" }]
+  },
+  {
+    id: "nc-23", title: "Partition Equal Subset Sum", category: "1-D Dynamic Programming",
+    prompt: "Given an array of positive integers, determine whether it can be partitioned into two subsets with equal sum.",
+    example: "Input: nums = [1,5,11,5]\nOutput: True   ([1,5,5] and [11])",
+    approach: "Equivalent to a subset-sum problem: if the total is odd, it's immediately impossible; otherwise track the set of all sums reachable using a subset of the numbers seen so far, and check whether half the total is reachable.",
+    starter: "def can_partition(nums):\n    # your code here\n    pass\n",
+    solution: "def can_partition(nums):\n    total = sum(nums)\n    if total % 2 != 0:\n        return False\n    target = total // 2\n    dp = {0}\n    for n in nums:\n        new_dp = set()\n        for t in dp:\n            new_dp.add(t)\n            new_dp.add(t + n)\n        dp = new_dp\n    return target in dp\n",
+    complexity: "O(n * target) time, O(target) space.",
+    whyComplexity: "Time is O(n * target) because each of the n numbers can extend every currently-reachable sum in the DP set, and there are at most target possible sums; space is O(target) for the set of reachable sums.",
+    tests: [{ call: "can_partition([1,5,11,5])", expected: "True" }, { call: "can_partition([1,2,3,5])", expected: "False" }]
+  },
+  {
+    id: "nc-24", title: "Coin Change II", category: "2-D Dynamic Programming",
+    prompt: "Given coin denominations and a target amount, count the number of distinct combinations that make up that amount (order doesn't matter, unlimited supply of each coin).",
+    example: "Input: amount = 5, coins = [1,2,5]\nOutput: 4",
+    approach: "DP where the outer loop is over coins and the inner loop is over amounts — processing one coin fully before moving to the next is what makes this count combinations (order-independent) rather than permutations, unlike Combination Sum IV.",
+    starter: "def change(amount, coins):\n    # your code here\n    pass\n",
+    solution: "def change(amount, coins):\n    dp = [0] * (amount + 1)\n    dp[0] = 1\n    for c in coins:\n        for a in range(c, amount + 1):\n            dp[a] += dp[a - c]\n    return dp[amount]\n",
+    complexity: "O(amount * len(coins)) time, O(amount) space.",
+    whyComplexity: "Time is O(amount * len(coins)) because for every coin, every amount from that coin's value up to the target is updated once; space is O(amount) for the DP array.",
+    tests: [{ call: "change(5, [1,2,5])", expected: "4" }]
+  },
+];

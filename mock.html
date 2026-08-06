@@ -56,7 +56,7 @@
             <div class="option-grid" id="track-options">
               <button class="option-btn selected" data-track="dsa"><strong>DSA</strong><span>22 problems</span></button>
               <button class="option-btn" data-track="blind75"><strong>Blind 75</strong><span>75 problems</span></button>
-              <button class="option-btn" data-track="faang"><strong>FAANG Extended</strong><span>26 problems</span></button>
+              <button class="option-btn" data-track="faang"><strong>NeetCode 150</strong><span>50 problems</span></button>
               <button class="option-btn" data-track="rl"><strong>RL Implementation</strong><span>7 runnable</span></button>
               <button class="option-btn" data-track="mixed"><strong>Mixed</strong><span>Any track</span></button>
             </div>
@@ -122,6 +122,10 @@
           </div>
 
           <div class="setup-row">
+            <label>Technique</label>
+            <p id="review-technique" style="font-size:14.5px; color:var(--ink-soft);"></p>
+          </div>
+          <div class="setup-row">
             <label>Approach</label>
             <p id="review-approach" style="font-size:14.5px; color:var(--ink-soft);"></p>
           </div>
@@ -129,7 +133,8 @@
             <label>Reference Solution</label>
             <div id="review-solution"></div>
           </div>
-          <div class="callout" style="margin-bottom:20px;"><strong>Complexity —</strong> <span id="review-complexity"></span></div>
+          <div class="callout" style="margin-bottom:8px;"><strong>Complexity —</strong> <span id="review-complexity"></span></div>
+          <div class="callout" style="margin-bottom:20px;"><strong>Why —</strong> <span id="review-why"></span></div>
 
           <div style="display:flex; gap:10px;">
             <button id="save-session-btn" class="btn btn-primary" style="flex:1;">Save session &amp; start another</button>
@@ -168,11 +173,16 @@
   </div>
 </footer>
 
+<script>window.Prism = window.Prism || {}; Prism.manual = true;</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-clike.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
 <script src="js/theme.js"></script>
 <script src="js/main.js"></script>
 <script src="data/dsa.js"></script>
 <script src="data/blind75.js"></script>
 <script src="data/faang_extra.js"></script>
+<script src="data/neetcode_extra.js"></script>
 <script src="data/rl.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>

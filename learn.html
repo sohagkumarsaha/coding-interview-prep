@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Learn — Optimus Prep</title>
-<meta name="description" content="DSA patterns, the full Blind 75, a FAANG-extended set, RL implementation, system design, a Python Q&amp;A curriculum, and a rapid-fire bank for the Tesla Optimus RL Engineer interview.">
+<meta name="description" content="DSA patterns, the full Blind 75, NeetCode 150 gap-fill, a Grind 75 study plan, RL implementation, system design, a Python Q&amp;A curriculum, and a rapid-fire bank for the Tesla Optimus RL Engineer interview.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Crect x='1' y='1' width='24' height='24' rx='5' fill='%230F1319'/%3E%3Cpath d='M5 14 L9 14 L11 8 L14 18 L16 12 L21 12' stroke='%2352B8AF' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,11 +50,12 @@
         <div class="chip-row" role="tablist" aria-label="Learning categories">
           <button class="chip learn-tab active" data-tab="dsa" role="tab">DSA Patterns</button>
           <button class="chip learn-tab" data-tab="blind75" role="tab">Blind 75</button>
-          <button class="chip learn-tab" data-tab="faang" role="tab">FAANG Extended</button>
+          <button class="chip learn-tab" data-tab="faang" role="tab">NeetCode 150</button>
           <button class="chip learn-tab" data-tab="python" role="tab">Python Mastery</button>
           <button class="chip learn-tab" data-tab="rl" role="tab">RL Implementation</button>
           <button class="chip learn-tab" data-tab="sysdesign" role="tab">System Design</button>
           <button class="chip learn-tab" data-tab="qa" role="tab">Q&amp;A Bank</button>
+          <button class="chip learn-tab" data-tab="plan" role="tab">Grind 75 Plan</button>
         </div>
         <input type="search" id="learn-search" class="sidebar search" style="max-width:240px; margin-bottom:0;" placeholder="Search this tab\u2026">
       </div>
@@ -70,6 +71,7 @@
       <div class="learn-panel" data-panel="rl" hidden></div>
       <div class="learn-panel" data-panel="sysdesign" hidden></div>
       <div class="learn-panel" data-panel="qa" hidden></div>
+      <div class="learn-panel" data-panel="plan" hidden></div>
     </div>
   </section>
 </main>
@@ -85,11 +87,17 @@
   </div>
 </footer>
 
+<script>window.Prism = window.Prism || {}; Prism.manual = true;</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-clike.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
 <script src="js/theme.js"></script>
 <script src="js/main.js"></script>
 <script src="data/dsa.js"></script>
 <script src="data/blind75.js"></script>
 <script src="data/faang_extra.js"></script>
+<script src="data/neetcode_extra.js"></script>
+<script src="data/grind75_plan.js"></script>
 <script src="data/python_mastery.js"></script>
 <script src="data/rl.js"></script>
 <script src="data/sysdesign.js"></script>

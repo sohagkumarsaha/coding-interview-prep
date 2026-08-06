@@ -356,6 +356,22 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .code-block:hover .copy-btn{ opacity:1; }
 
+/* -------------------- Prism.js syntax highlighting, mapped to design tokens -------------------- */
+.code-block pre code{
+  background: none; font-family: inherit; white-space: pre; font-size: inherit;
+}
+.token.comment{ color: var(--ink-faint); font-style: italic; }
+.token.string, .token.triple-quoted-string{ color: var(--success); }
+.token.number{ color: var(--amber); }
+.token.keyword, .token.operator.keyword{ color: var(--signal); font-weight: 600; }
+.token.boolean, .token.constant{ color: var(--amber); font-weight: 600; }
+.token.function, .token.class-name{ color: var(--signal-strong); }
+.token.builtin{ color: var(--amber); }
+.token.decorator, .token.annotation{ color: var(--amber); font-style: italic; }
+.token.operator, .token.punctuation{ color: var(--ink-soft); }
+.token.property, .token.parameter{ color: var(--code-ink); }
+.token.docstring{ color: var(--ink-faint); font-style: italic; }
+
 /* -------------------- Sidebar / two-col app layout -------------------- */
 .app-layout{ display:grid; grid-template-columns: 300px 1fr; gap: 22px; align-items:start; }
 .sidebar{
@@ -460,6 +476,26 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 /* -------------------- Callouts -------------------- */
 .callout{ border:1px solid var(--line); border-left: 3px solid var(--signal); border-radius: var(--radius-sm); padding: 14px 16px; background: var(--surface-2); font-size: 14px; color: var(--ink-soft); }
 .callout strong{ color: var(--ink); }
+
+/* -------------------- Study plan -------------------- */
+.plan-week-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.plan-week-head .progress-track{ width:120px; height:5px; border-radius:3px; background: var(--surface-2); overflow:hidden; flex:none; }
+.plan-week-head .progress-fill{ height:100%; background: var(--signal); border-radius:3px; transition: width var(--dur) var(--ease); }
+.plan-item{
+  display:flex; align-items:center; gap:12px;
+  padding: 10px 4px; border-bottom: 1px solid var(--line);
+  text-decoration:none; color: inherit;
+}
+.plan-item:last-child{ border-bottom:none; }
+.plan-item:hover .plan-item-title{ color: var(--signal); }
+.plan-item .check{
+  width:18px; height:18px; border-radius:5px; border:1.5px solid var(--line-strong);
+  flex:none; display:flex; align-items:center; justify-content:center;
+  font-size:11px; color: transparent;
+}
+.plan-item.solved .check{ background: var(--success); border-color: var(--success); color:#fff; }
+.plan-item-title{ flex:1; font-size:14px; transition: color var(--dur) var(--ease); }
+.plan-item .mins{ font-family: var(--font-mono); font-size:12px; color: var(--ink-faint); flex:none; }
 
 /* -------------------- Utility for hidden -------------------- */
 [hidden]{ display:none !important; }

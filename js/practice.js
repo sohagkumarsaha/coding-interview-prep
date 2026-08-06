@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ...DSA_PROBLEMS.map((p, i) => ({ ...p, source: "dsa", label: "P-" + String(i + 1).padStart(2, "0") })),
     ...BLIND75_PROBLEMS.map((p) => ({ ...p, pattern: p.category, source: "blind75", label: p.id.replace("b75-", "B-") })),
     ...FAANG_EXTRA_PROBLEMS.map((p) => ({ ...p, pattern: p.category, source: "faang", label: p.id.replace("fx-", "X-") })),
+    ...NEETCODE_EXTRA_PROBLEMS.map((p) => ({ ...p, pattern: p.category, source: "faang", label: p.id.replace("nc-", "N-") })),
     ...RL_PROBLEMS.map((p, i) => ({ ...p, source: "rl", label: "R-" + String(i + 1).padStart(2, "0") })),
   ];
 
@@ -85,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     solutionWrap.hidden = true;
     solutionWrap.innerHTML = "";
-    solutionBtn.textContent = "Show reference solution";
+    solutionBtn.textContent = "Show approach & solution";
     consoleEl.innerHTML = '<span class="placeholder">Run your code to see output here.</span>';
     testResultsEl.innerHTML = "";
 
@@ -119,11 +120,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const showing = !solutionWrap.hidden;
     if (showing) {
       solutionWrap.hidden = true;
-      solutionBtn.textContent = "Show reference solution";
+      solutionBtn.textContent = "Show approach & solution";
     } else {
       solutionWrap.hidden = false;
-      solutionWrap.innerHTML = renderCodeBlock(currentProblem.solution);
-      solutionBtn.textContent = "Hide reference solution";
+      const p = currentProblem;
+      solutionWrap.innerHTML = `
+        <div class="callout" style="margin-bottom:12px;"><strong>Technique —</strong> ${escapeHtml(p.pattern)}</div>
+        <div class="callout" style="margin-bottom:12px;"><strong>Approach —</strong> ${escapeHtml(p.approach)}</div>
+        ${renderCodeBlock(p.solution)}
+        <div class="callout" style="margin-top:12px;"><strong>Complexity —</strong> ${escapeHtml(p.complexity)}</div>
+        ${p.whyComplexity ? `<div class="callout" style="margin-top:8px;"><strong>Why —</strong> ${escapeHtml(p.whyComplexity)}</div>` : ""}
+      `;
+      highlightCode(solutionWrap);
+      solutionBtn.textContent = "Hide approach & solution";
     }
   });
 

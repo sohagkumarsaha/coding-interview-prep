@@ -262,11 +262,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   padding: 26px 24px;
-  transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
   display:flex; flex-direction:column; gap:14px;
   position:relative;
 }
-.panel-card:hover{ transform: translateY(-3px); border-color: var(--signal); box-shadow: var(--shadow); }
+.panel-card:hover{ border-color: var(--signal); box-shadow: var(--shadow); }
 .panel-card .readout{ font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-faint); letter-spacing:.05em; text-transform:uppercase; }
 .panel-card .icon-wrap{ width:40px; height:40px; border-radius: var(--radius-md); background: var(--signal-tint); display:flex; align-items:center; justify-content:center; color: var(--signal); }
 .panel-card .icon-wrap svg{ width:20px; height:20px; }

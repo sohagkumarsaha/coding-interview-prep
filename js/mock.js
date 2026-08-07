@@ -134,11 +134,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     consoleEl.innerHTML = '<span class="placeholder">Run your code to see output here.</span>';
     testResultsEl.innerHTML = "";
-    editor = OptimusEditor.create(editorContainer, currentProblem.starter);
 
     setupScreen.hidden = true;
     reviewPanel.hidden = true;
     sessionScreen.hidden = false;
+
+    editor = OptimusEditor.create(editorContainer, currentProblem.starter);
+    editor.refresh();
 
     PyRunner.load().catch(() => setStatus("error"));
     startTimer();

@@ -118,6 +118,8 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (state === "error") { statusEl.querySelector(".label").textContent = "Runtime failed to load"; }
   }
   PyRunner.onStatus(setStatus);
+  setStatus("loading");
+  PyRunner.load().catch(() => setStatus("error"));
 
   startBtn.addEventListener("click", () => {
     currentProblem = pickRandomProblem(selectedTrack);
@@ -138,7 +140,6 @@ document.addEventListener("DOMContentLoaded", () => {
     reviewPanel.hidden = true;
     sessionScreen.hidden = false;
 
-    setStatus("loading");
     PyRunner.load().catch(() => setStatus("error"));
     startTimer();
   });

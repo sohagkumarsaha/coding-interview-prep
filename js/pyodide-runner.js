@@ -3,7 +3,7 @@
 // whatever the submitted code defines. No backend involved — everything
 // executes locally in WebAssembly.
 const PyRunner = (function () {
-  const PYODIDE_INDEX_URL = "https://cdn.jsdelivr.net/pyodide/v0.26.1/full/";
+  const PYODIDE_INDEX_URL = "vendor/pyodide/";
   let pyodide = null;
   let loadingPromise = null;
   const statusListeners = [];
